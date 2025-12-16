@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Unificado de Gestión Técnica</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Menú Principal -->
+        <div id="menu-principal" class="menu-section active">
+            <header>
+                <h1>Sistema Unificado de Gestión Técnica</h1>
+                <p>Seleccione el tipo de tarea a realizar</p>
+            </header>
+            
+            <div class="menu-options">
+                <div class="menu-card" onclick="seleccionarTarea('corte')">
+                    <div class="menu-icon">⚡</div>
+                    <h3>Corte del Servicio</h3>
+                    <p>Realizar corte de servicio técnico</p>
+                </div>
+                
+                <div class="menu-card" onclick="seleccionarTarea('reconexion')">
+                    <div class="menu-icon">🔌</div>
+                    <h3>Reconexión del Servicio</h3>
+                    <p>Restablecer servicio previamente cortado</p>
+                </div>
+                
+                <div class="menu-card" onclick="seleccionarTarea('verificacion')">
+                    <div class="menu-icon">🔍</div>
+                    <h3>Verificación de Corte</h3>
+                    <p>Verificar estado de servicio cortado</p>
+                </div>
+                
+                <div class="menu-card" onclick="seleccionarTarea('analisis')">
+                    <div class="menu-icon">📊</div>
+                    <h3>Sistema de Análisis de Consumo</h3>
+                    <p>Análisis de consumo residencial y comercial</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submenú Análisis de Consumo -->
+        <div id="submenu-analisis" class="menu-section">
+            <header>
+                <h1>Sistema de Análisis de Consumo</h1>
+                <p>Seleccione el tipo de formulario que desea completar</p>
+                <button class="btn-volver" onclick="volverAlMenuPrincipal()">← Volver al Menú Principal</button>
+            </header>
+            
+            <div class="menu-options">
+                <div class="menu-card" onclick="seleccionarFormulario('residencial')">
+                    <div class="menu-icon">🏠</div>
+                    <h3>Residenciales</h3>
+                    <p>Formulario para análisis de consumo en viviendas</p>
+                </div>
+                
+                <div class="menu-card" onclick="seleccionarFormulario('comercial')">
+                    <div class="menu-icon">🏢</div>
+                    <h3>Comerciales - Industriales</h3>
+                    <p>Formulario para análisis de consumo en negocios e industrias</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- FORMULARIOS DE CUADRILLAS -->
+        <!-- ============================================= -->
+
+        <!-- Formulario de Corte -->
+        <div id="formulario-corte" class="formulario">
+            <header>
+                <h1>Formulario de Corte del Servicio</h1>
+                <p>Complete todos los campos requeridos para generar el reporte de inspección</p>
+                <button class="btn-volver" onclick="volverAlMenuPrincipal()">← Volver al Menú Principal</button>
+            </header>
+
+            <form id="inspeccionFormCorte">
+                <div class="form-section">
+                    <h2>Información de la Cuadrilla y Contrato</h2>
+
+                    <div class="form-group">
+                        <label for="cuadrilla-corte" class="required">Nombre de la cuadrilla</label>
+                        <select id="cuadrilla-corte" name="cuadrilla" required>
+                            <option value="">Seleccione una cuadrilla</option>
+                            <option value="RODOLFO ANDRES GUERRERO FERNANDEZ / MICHAEL ANDRES ARIAS SOLORZANO">RODOLFO ANDRES GUERRERO FERNANDEZ / MICHAEL ANDRES ARIAS SOLORZANO</option>
+                            <option value="ALLAN PETER BARREZUETA CARBO / KEVIN JAVIER ZHUNIO CHELE">ALLAN PETER BARREZUETA CARBO / KEVIN JAVIER ZHUNIO CHELE</option>
+                            <option value="GILSON ALBERTO MARCILLO ALVARADO / JOSE ALEJANDRO BRAVO VARGAS">GILSON ALBERTO MARCILLO ALVARADO / JOSE ALEJANDRO BRAVO VARGAS</option>
+                            <option value="JOSE ALBERTO CABRERA SILVA / JOSUE AUGUSTO ESPINOZA SANCHEZ">JOSE ALBERTO CABRERA SILVA / JOSUE AUGUSTO ESPINOZA SANCHEZ</option>
+                            <option value="ANGELLO ISRAEL ZUÑIGA CAJAPE / CARLOS ANDRES COFRE VALVERDE">ANGELLO ISRAEL ZUÑIGA CAJAPE / CARLOS ANDRES COFRE VALVERDE</option>
+                            <option value="BRYAN JOSUE LIGORGURO GUAMAN / PETER JAHIR CARRANZA BRAVO">BRYAN JOSUE LIGORGURO GUAMAN / PETER JAHIR CARRANZA BRAVO</option>
+                            <option value="CHRISTIAN MARTINEZ VALVERDE / EDISON ALEX ORDOÑEZ LUCANO">CHRISTIAN MARTINEZ VALVERDE / EDISON ALEX ORDOÑEZ LUCANO</option>
+                            <option value="ERICK JOSUE YAGUAL GONZALEZ / CAMILO FERNANDO LANDIN QUIÑONEZ">ERICK JOSUE YAGUAL GONZALEZ / CAMILO FERNANDO LANDIN QUIÑONEZ</option>
+                            <option value="KEVIN MONTENEGRO / ELIAS RODRIGUEZ">KEVIN MONTENEGRO / ELIAS RODRIGUEZ</option>
+                            <option value="RICHARD ALEX TIGUA PLUA / MARIO ANTHONY PEREZ RODRIGUEZ">RICHARD ALEX TIGUA PLUA / MARIO ANTHONY PEREZ RODRIGUEZ</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contrato-corte" class="required">Contrato</label>
+                        <input type="number" id="contrato-corte" name="contrato" required placeholder="Ingrese el número de contrato">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Estado del Servicio y Medidor</h2>
+
+                    <div class="form-group">
+                        <label class="required">Servicio</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="servicio" value="Activo" required> Activo</label>
+                            <label><input type="radio" name="servicio" value="Suspendido" required> Suspendido</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Medidor</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="medidor" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="medidor" value="Mal estado" required> Mal estado</label>
+                        </div>
+                        <div id="medidor-razon-corte" class="conditional-field">
+                            <label for="medidor-razon-text-corte">¿Por qué?</label>
+                            <input type="text" id="medidor-razon-text-corte" name="medidor_razon" placeholder="Explique el motivo del mal estado">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lectura-corte" class="required">Lectura</label>
+                        <input type="number" id="lectura-corte" name="lectura" required placeholder="Ingrese la lectura">
+                        <div class="field-note">El valor se mostrará automáticamente con "M3" en el reporte</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="litros-corte" class="required">Litros</label>
+                        <input type="number" id="litros-corte" name="litros" required placeholder="Ingrese los litros">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Estado de Componentes</h2>
+
+                    <div class="form-group">
+                        <label class="required">Cajetin</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="cajetin" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="cajetin" value="Mal estado" required> Mal estado</label>
+                        </div>
+                        
+                        <div id="cajetin-razon-corte" class="conditional-field">
+                            <label class="required">Seleccione el tipo de daño:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="cajetin_tipo_dano" value="tapa dañada sin visor"> Tapa dañada sin visor</label>
+                                <label><input type="radio" name="cajetin_tipo_dano" value="cajetin roto"> Cajetín roto</label>
+                                <label><input type="radio" name="cajetin_tipo_dano" value="sin tapa"> Sin tapa</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Tipo de llave de corte</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="tipo_llave" value="PVC" required> PVC</label>
+                            <label><input type="radio" name="tipo_llave" value="PEAD" required> PEAD</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Llave de corte</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="llave_corte" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="llave_corte" value="Mal estado" required> Mal estado</label>
+                        </div>
+                        <div id="llave-corte-razon-corte" class="conditional-field">
+                            <label for="llave-corte-razon-text-corte">¿Por qué?</label>
+                            <input type="text" id="llave-corte-razon-text-corte" name="llave_corte_razon" placeholder="Explique el motivo del mal estado">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Llave de paso</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="llave_paso" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="llave_paso" value="Mal estado" required> Mal estado</label>
+                            <div id="llave-paso-razon-corte" class="conditional-field">
+                                <label for="llave-paso-razon-text-corte">¿Por qué?</label>
+                                <input type="text" id="llave-paso-razon-text-corte" name="llave_paso_razon" placeholder="Explique el motivo del mal estado">
+                            </div>
+                            <label><input type="radio" name="llave_paso" value="No tiene" required> No tiene</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Detalles Finales de la Inspección</h2>
+
+                    <div class="form-group">
+                        <label class="required">Medio nudo</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="medio_nudo" value="Si" required> Si</label>
+                            <label><input type="radio" name="medio_nudo" value="No" required> No</label>
+                        </div>
+                        <div id="medio-nudo-accesorio-corte" class="conditional-field">
+                            <label for="medio-nudo-accesorio-text-corte">¿Qué tipo de accesorio tiene?</label>
+                            <input type="text" id="medio-nudo-accesorio-text-corte" name="medio_nudo_accesorio" placeholder="Especifique el tipo de accesorio">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Se realiza corte</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="corte" value="Con ficha" required> Con ficha</label>
+                            <label><input type="radio" name="corte" value="Con ficha y llave trabada" required> Con ficha y llave trabada</label>
+                            <label><input type="radio" name="corte" value="Solo llave trabada" required> Solo llave trabada</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Predio</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="predio" value="1 planta" required> 1 planta</label>
+                            <label><input type="radio" name="predio" value="2 planta" required> 2 planta</label>
+                            <label><input type="radio" name="predio" value="3 planta" required> 3 planta</label>
+                            <label><input type="radio" name="predio" value="4 planta" required> 4 planta</label>
+                            <label><input type="radio" name="predio" value="condominio" required> condominio</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="color-corte" class="required">Color</label>
+                        <input type="text" id="color-corte" name="color" required placeholder="Ingrese el color">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Perno</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="perno" value="Se instala" required> Se instala</label>
+                            <label><input type="radio" name="perno" value="Se ajusta" required> Se ajusta</label>
+                            <label><input type="radio" name="perno" value="No se coloca" required> No se coloca</label>
+                        </div>
+                        <div id="perno-razon-corte" class="conditional-field">
+                            <label class="required">Seleccione la razón:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="perno_razon" value="no hay en stock"> No hay en stock</label>
+                                <label><input type="radio" name="perno_razon" value="tapa dañada"> Tapa dañada</label>
+                                <label><input type="radio" name="perno_razon" value="No se puede ajustar perno"> No se puede ajustar perno</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Observación Final</h2>
+                    <div class="form-group">
+                        <textarea id="observacion-corte" name="observacion" rows="3" placeholder="Escriba cualquier observación adicional"></textarea>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button type="button" class="btn-submit" onclick="generarResumenCorte()">Generar Reporte de Inspección</button>
+                </div>
+            </form>
+            
+            <div id="resumen-corte" class="resumen">
+                <div class="success-message">
+                    <h2>¡Reporte de Corte Generado!</h2>
+                    <p>El siguiente es el resumen de la tarea realizada:</p>
+                </div>
+                
+                <h2>Resumen del Corte</h2>
+                <button id="copiar-resumen-corte" class="btn-copiar">📋 Copiar Resumen</button>
+                <div class="resumen-content" id="resumen-contenido-corte"></div>
+                
+                <div class="buttons" style="margin-top: 20px;">
+                    <button type="button" class="btn-volver" onclick="volverAlMenuPrincipal()">Volver al Menú Principal</button>
+                    <button type="button" style="background-color: #0e4f88; margin-left: 10px;" onclick="volverAlFormularioCorte()">Realizar Otro Corte</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario de Reconexión -->
+        <div id="formulario-reconexion" class="formulario">
+            <header>
+                <h1>Formulario de Reconexión del Servicio</h1>
+                <p>Complete todos los campos requeridos para generar el reporte de reconexión</p>
+                <button class="btn-volver" onclick="volverAlMenuPrincipal()">← Volver al Menú Principal</button>
+            </header>
+            
+            <form id="inspeccionFormReconexion">
+                <div class="form-section">
+                    <h2>Item de Cobro</h2>
+                    <div class="form-group">
+                        <label for="item-cobro">Seleccione o busque un ítem de cobro:</label>
+                        <input type="text" id="item-cobro" name="item_cobro" list="items-cobro-list" placeholder="Escriba para buscar o seleccionar un ítem">
+                        <datalist id="items-cobro-list"></datalist>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Información de la Cuadrilla y Contrato</h2>
+
+                    <div class="form-group">
+                        <label for="cuadrilla-reconexion" class="required">Nombre de la cuadrilla</label>
+                        <select id="cuadrilla-reconexion" name="cuadrilla" required>
+                            <option value="">Seleccione una cuadrilla</option>
+                            <option value="RODOLFO ANDRES GUERRERO FERNANDEZ / MICHAEL ANDRES ARIAS SOLORZANO">RODOLFO ANDRES GUERRERO FERNANDEZ / MICHAEL ANDRES ARIAS SOLORZANO</option>
+                            <option value="ALLAN PETER BARREZUETA CARBO / KEVIN JAVIER ZHUNIO CHELE">ALLAN PETER BARREZUETA CARBO / KEVIN JAVIER ZHUNIO CHELE</option>
+                            <option value="GILSON ALBERTO MARCILLO ALVARADO / JOSE ALEJANDRO BRAVO VARGAS">GILSON ALBERTO MARCILLO ALVARADO / JOSE ALEJANDRO BRAVO VARGAS</option>
+                            <option value="JOSE ALBERTO CABRERA SILVA / JOSUE AUGUSTO ESPINOZA SANCHEZ">JOSE ALBERTO CABRERA SILVA / JOSUE AUGUSTO ESPINOZA SANCHEZ</option>
+                            <option value="ANGELLO ISRAEL ZUÑIGA CAJAPE / CARLOS ANDRES COFRE VALVERDE">ANGELLO ISRAEL ZUÑIGA CAJAPE / CARLOS ANDRES COFRE VALVERDE</option>
+                            <option value="BRYAN JOSUE LIGORGURO GUAMAN / PETER JAHIR CARRANZA BRAVO">BRYAN JOSUE LIGORGURO GUAMAN / PETER JAHIR CARRANZA BRAVO</option>
+                            <option value="CHRISTIAN MARTINEZ VALVERDE / EDISON ALEX ORDOÑEZ LUCANO">CHRISTIAN MARTINEZ VALVERDE / EDISON ALEX ORDOÑEZ LUCANO</option>
+                            <option value="ERICK JOSUE YAGUAL GONZALEZ / CAMILO FERNANDO LANDIN QUIÑONEZ">ERICK JOSUE YAGUAL GONZALEZ / CAMILO FERNANDO LANDIN QUIÑONEZ</option>
+                            <option value="KEVIN MONTENEGRO / ELIAS RODRIGUEZ">KEVIN MONTENEGRO / ELIAS RODRIGUEZ</option>
+                            <option value="RICHARD ALEX TIGUA PLUA / MARIO ANTHONY PEREZ RODRIGUEZ">RICHARD ALEX TIGUA PLUA / MARIO ANTHONY PEREZ RODRIGUEZ</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contrato-reconexion" class="required">Contrato</label>
+                        <input type="number" id="contrato-reconexion" name="contrato" required placeholder="Ingrese el número de contrato">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Estado del Servicio y Medidor</h2>
+
+                    <div class="form-group">
+                        <label class="required">Servicio</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="servicio" value="Activo" required> Activo</label>
+                            <label><input type="radio" name="servicio" value="Suspendido" required> Suspendido</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Medidor</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="medidor" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="medidor" value="Mal estado" required> Mal estado</label>
+                        </div>
+                        <div id="medidor-razon-reconexion" class="conditional-field">
+                            <label for="medidor-razon-text-reconexion">¿Por qué?</label>
+                            <input type="text" id="medidor-razon-text-reconexion" name="medidor_razon" placeholder="Explique el motivo del mal estado">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lectura-reconexion" class="required">Lectura</label>
+                        <input type="number" id="lectura-reconexion" name="lectura" required placeholder="Ingrese la lectura">
+                        <div class="field-note">El valor se mostrará automáticamente con "M3" en el reporte</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="litros-reconexion" class="required">Litros</label>
+                        <input type="number" id="litros-reconexion" name="litros" required placeholder="Ingrese los litros">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Estado de Componentes</h2>
+
+                    <div class="form-group">
+                        <label class="required">Cajetin</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="cajetin" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="cajetin" value="Mal estado" required> Mal estado</label>
+                        </div>
+                        
+                        <div id="cajetin-razon-reconexion" class="conditional-field">
+                            <label class="required">Seleccione el tipo de daño:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="cajetin_tipo_dano" value="tapa dañada sin visor"> Tapa dañada sin visor</label>
+                                <label><input type="radio" name="cajetin_tipo_dano" value="cajetin roto"> Cajetín roto</label>
+                                <label><input type="radio" name="cajetin_tipo_dano" value="sin tapa"> Sin tapa</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Tipo de llave de corte</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="tipo_llave" value="PVC" required> PVC</label>
+                            <label><input type="radio" name="tipo_llave" value="PEAD" required> PEAD</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Llave de corte</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="llave_corte" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="llave_corte" value="Mal estado" required> Mal estado</label>
+                        </div>
+                        <div id="llave-corte-razon-reconexion" class="conditional-field">
+                            <label for="llave-corte-razon-text-reconexion">¿Por qué?</label>
+                            <input type="text" id="llave-corte-razon-text-reconexion" name="llave_corte_razon" placeholder="Explique el motivo del mal estado">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Llave de paso</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="llave_paso" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="llave_paso" value="Mal estado" required> Mal estado</label>
+                            <div id="llave-paso-razon-reconexion" class="conditional-field">
+                                <label for="llave-paso-razon-text-reconexion">¿Por qué?</label>
+                                <input type="text" id="llave-paso-razon-text-reconexion" name="llave_paso_razon" placeholder="Explique el motivo del mal estado">
+                            </div>
+                            <label><input type="radio" name="llave_paso" value="No tiene" required> No tiene</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Detalles Finales de la Inspección</h2>
+
+                    <div class="form-group">
+                        <label class="required">Medio nudo</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="medio_nudo" value="Si" required> Si</label>
+                            <label><input type="radio" name="medio_nudo" value="No" required> No</label>
+                        </div>
+                        <div id="medio-nudo-accesorio-reconexion" class="conditional-field">
+                            <label for="medio-nudo-accesorio-text-reconexion">¿Qué tipo de accesorio tiene?</label>
+                            <input type="text" id="medio-nudo-accesorio-text-reconexion" name="medio_nudo_accesorio" placeholder="Especifique el tipo de accesorio">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Se realiza la reconexión</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="reconexion" value="se retira ficha" required> Se retira ficha</label>
+                            <label><input type="radio" name="reconexion" value="se destraba llave" required> Se destraba llave</label>
+                            <label><input type="radio" name="reconexion" value="se retira ficha y se destraba llave" required> Se retira ficha y se destraba llave</label>
+                            <label><input type="radio" name="reconexion" value="ya estaba reconectado" required> Ya estaba reconectado</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Predio</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="predio" value="1 planta" required> 1 planta</label>
+                            <label><input type="radio" name="predio" value="2 planta" required> 2 planta</label>
+                            <label><input type="radio" name="predio" value="3 planta" required> 3 planta</label>
+                            <label><input type="radio" name="predio" value="4 planta" required> 4 planta</label>
+                            <label><input type="radio" name="predio" value="condominio" required> condominio</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="color-reconexion" class="required">Color</label>
+                        <input type="text" id="color-reconexion" name="color" required placeholder="Ingrese el color">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Perno</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="perno" value="Se instala" required> Se instala</label>
+                            <label><input type="radio" name="perno" value="Se ajusta" required> Se ajusta</label>
+                            <label><input type="radio" name="perno" value="No se coloca" required> No se coloca</label>
+                        </div>
+                        <div id="perno-razon-reconexion" class="conditional-field">
+                            <label class="required">Seleccione la razón:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="perno_razon" value="no hay en stock"> No hay en stock</label>
+                                <label><input type="radio" name="perno_razon" value="tapa dañada"> Tapa dañada</label>
+                                <label><input type="radio" name="perno_razon" value="No se puede ajustar perno"> No se puede ajustar perno</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Observación Final</h2>
+                    <div class="form-group">
+                        <textarea id="observacion-reconexion" name="observacion" rows="3" placeholder="Escriba cualquier observación adicional"></textarea>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button type="button" class="btn-submit" onclick="generarResumenReconexion()">Generar Reporte de Reconexión</button>
+                </div>
+            </form>
+            
+            <div id="resumen-reconexion" class="resumen">
+                <div class="success-message">
+                    <h2>¡Reporte de Reconexión Generado!</h2>
+                    <p>El siguiente es el resumen de la tarea realizada:</p>
+                </div>
+                
+                <h2>Resumen de la Reconexión</h2>
+                <button id="copiar-resumen-reconexion" class="btn-copiar">📋 Copiar Resumen</button>
+                <div class="resumen-content" id="resumen-contenido-reconexion"></div>
+                
+                <div class="buttons" style="margin-top: 20px;">
+                    <button type="button" class="btn-volver" onclick="volverAlMenuPrincipal()">Volver al Menú Principal</button>
+                    <button type="button" style="background-color: #0e4f88; margin-left: 10px;" onclick="volverAlFormularioReconexion()">Realizar Otra Reconexión</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario de Verificación -->
+        <div id="formulario-verificacion" class="formulario">
+            <header>
+                <h1>Formulario de Verificación de Corte</h1>
+                <p>Complete todos los campos requeridos para generar el reporte de verificación</p>
+                <button class="btn-volver" onclick="volverAlMenuPrincipal()">← Volver al Menú Principal</button>
+            </header>
+            
+            <form id="inspeccionFormVerificacion">
+                <div class="form-section">
+                    <h2>Información de la Cuadrilla y Contrato</h2>
+                    
+                    <div class="form-group">
+                        <label for="cuadrilla-verificacion" class="required">Nombre de la cuadrilla</label>
+                        <select id="cuadrilla-verificacion" name="cuadrilla" required>
+                            <option value="">Seleccione una cuadrilla</option>
+                            <option value="RODOLFO ANDRES GUERRERO FERNANDEZ / MICHAEL ANDRES ARIAS SOLORZANO">RODOLFO ANDRES GUERRERO FERNANDEZ / MICHAEL ANDRES ARIAS SOLORZANO</option>
+                            <option value="ALLAN PETER BARREZUETA CARBO / KEVIN JAVIER ZHUNIO CHELE">ALLAN PETER BARREZUETA CARBO / KEVIN JAVIER ZHUNIO CHELE</option>
+                            <option value="GILSON ALBERTO MARCILLO ALVARADO / JOSE ALEJANDRO BRAVO VARGAS">GILSON ALBERTO MARCILLO ALVARADO / JOSE ALEJANDRO BRAVO VARGAS</option>
+                            <option value="JOSE ALBERTO CABRERA SILVA / JOSUE AUGUSTO ESPINOZA SANCHEZ">JOSE ALBERTO CABRERA SILVA / JOSUE AUGUSTO ESPINOZA SANCHEZ</option>
+                            <option value="ANGELLO ISRAEL ZUÑIGA CAJAPE / CARLOS ANDRES COFRE VALVERDE">ANGELLO ISRAEL ZUÑIGA CAJAPE / CARLOS ANDRES COFRE VALVERDE</option>
+                            <option value="BRYAN JOSUE LIGORGURO GUAMAN / PETER JAHIR CARRANZA BRAVO">BRYAN JOSUE LIGORGURO GUAMAN / PETER JAHIR CARRANZA BRAVO</option>
+                            <option value="CHRISTIAN MARTINEZ VALVERDE / EDISON ALEX ORDOÑEZ LUCANO">CHRISTIAN MARTINEZ VALVERDE / EDISON ALEX ORDOÑEZ LUCANO</option>
+                            <option value="ERICK JOSUE YAGUAL GONZALEZ / CAMILO FERNANDO LANDIN QUIÑONEZ">ERICK JOSUE YAGUAL GONZALEZ / CAMILO FERNANDO LANDIN QUIÑONEZ</option>
+                            <option value="KEVIN MONTENEGRO / ELIAS RODRIGUEZ">KEVIN MONTENEGRO / ELIAS RODRIGUEZ</option>
+                            <option value="RICHARD ALEX TIGUA PLUA / MARIO ANTHONY PEREZ RODRIGUEZ">RICHARD ALEX TIGUA PLUA / MARIO ANTHONY PEREZ RODRIGUEZ</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contrato-verificacion" class="required">Contrato</label>
+                        <input type="number" id="contrato-verificacion" name="contrato" required placeholder="Ingrese el número de contrato">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Estado del Servicio y Medidor</h2>
+                    
+                    <div class="form-group">
+                        <label class="required">Servicio</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="servicio" value="Activo" required> Activo</label>
+                            <label><input type="radio" name="servicio" value="Suspendido" required> Suspendido</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Medidor</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="medidor" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="medidor" value="Mal estado" required> Mal estado</label>
+                        </div>
+                        <div id="medidor-razon-verificacion" class="conditional-field">
+                            <label for="medidor-razon-text-verificacion">¿Por qué?</label>
+                            <input type="text" id="medidor-razon-text-verificacion" name="medidor_razon" placeholder="Explique el motivo del mal estado">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lectura-verificacion" class="required">Lectura</label>
+                        <input type="number" id="lectura-verificacion" name="lectura" required placeholder="Ingrese la lectura">
+                        <div class="field-note">El valor se mostrará automáticamente con "M3" en el reporte</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="litros-verificacion" class="required">Litros</label>
+                        <input type="number" id="litros-verificacion" name="litros" required placeholder="Ingrese los litros">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Estado de Componentes</h2>
+                    
+                    <div class="form-group">
+                        <label class="required">Cajetin</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="cajetin" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="cajetin" value="Mal estado" required> Mal estado</label>
+                        </div>
+                        
+                        <div id="cajetin-razon-verificacion" class="conditional-field">
+                            <label class="required">Seleccione el tipo de daño:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="cajetin_tipo_dano" value="tapa dañada sin visor"> Tapa dañada sin visor</label>
+                                <label><input type="radio" name="cajetin_tipo_dano" value="cajetin roto"> Cajetín roto</label>
+                                <label><input type="radio" name="cajetin_tipo_dano" value="sin tapa"> Sin tapa</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Tipo de llave de corte</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="tipo_llave" value="PVC" required> PVC</label>
+                            <label><input type="radio" name="tipo_llave" value="PEAD" required> PEAD</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Llave de corte</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="llave_corte" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="llave_corte" value="Mal estado" required> Mal estado</label>
+                        </div>
+                        <div id="llave-corte-razon-verificacion" class="conditional-field">
+                            <label for="llave-corte-razon-text-verificacion">¿Por qué?</label>
+                            <input type="text" id="llave-corte-razon-text-verificacion" name="llave_corte_razon" placeholder="Explique el motivo del mal estado">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Llave de paso</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="llave_paso" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="llave_paso" value="Mal estado" required> Mal estado</label>
+                            <div id="llave-paso-razon-verificacion" class="conditional-field">
+                                <label for="llave-paso-razon-text-verificacion">¿Por qué?</label>
+                                <input type="text" id="llave-paso-razon-text-verificacion" name="llave_paso_razon" placeholder="Explique el motivo del mal estado">
+                            </div>
+                            <label><input type="radio" name="llave_paso" value="No tiene" required> No tiene</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Detalles Finales de la Inspección</h2>
+                    
+                    <div class="form-group">
+                        <label class="required">Medio nudo</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="medio_nudo" value="Si" required> Si</label>
+                            <label><input type="radio" name="medio_nudo" value="No" required> No</label>
+                        </div>
+                        <div id="medio-nudo-accesorio-verificacion" class="conditional-field">
+                            <label for="medio-nudo-accesorio-text-verificacion">¿Qué tipo de accesorio tiene?</label>
+                            <input type="text" id="medio-nudo-accesorio-text-verificacion" name="medio_nudo_accesorio" placeholder="Especifique el tipo de accesorio">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Se realiza la verificación de corte</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="verificacion" value="se encontró cortado" required> Se encontró cortado</label>
+                            
+                            <div id="cortado-opciones" class="conditional-field">
+                                <div class="form-group">
+                                    <label class="required">Seleccione el estado del predio:</label>
+                                    <div class="radio-group">
+                                        <label><input type="radio" name="cortado_opcion" value="Solar vacio"> Solar vacio</label>
+                                        <label><input type="radio" name="cortado_opcion" value="Predio deshabitado"> Predio deshabitado</label>
+                                        <label><input type="radio" name="cortado_opcion" value="Predio habitado, usuario ausente"> Predio habitado, usuario ausente</label>
+                                        <label><input type="radio" name="cortado_opcion" value="Predio habitado, usuario presente"> Predio habitado, usuario presente</label>
+                                    </div>
+                                </div>
+                                
+                                <div id="abastecimiento-field" class="conditional-field">
+                                    <div class="form-group">
+                                        <label for="abastecimiento-text">¿Cómo se abastece? (opcional)</label>
+                                        <input type="text" id="abastecimiento-text" name="abastecimiento" placeholder="Describa cómo se abastece el usuario">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <label><input type="radio" name="verificacion" value="se encontró reconectado" required> Se encontró reconectado</label>
+                            
+                            <div id="reconectado-opciones" class="conditional-field">
+                                <div class="form-group">
+                                    <label class="required">Seleccione el tipo de corte:</label>
+                                    <div class="radio-group">
+                                        <label><input type="radio" name="reconectado_opcion" value="Corte con dispositivo en llave"> Corte con dispositivo en llave</label>
+                                        <label><input type="radio" name="reconectado_opcion" value="Corte en guía con dispositivo"> Corte en guía con dispositivo</label>
+                                        <label>
+                                            <input type="radio" name="reconectado_opcion" value="Corte con rotura" id="corte-con-rotura"> Corte con rotura
+                                            <input type="text" id="rotura-medida" placeholder="ej: 40x40" style="margin-left: 10px; width: 100px; display: none;"> dispositivo en guía
+                                        </label>
+                                        <label><input type="radio" name="reconectado_opcion" value="Corte con ficha y llave trabada"> Corte con ficha y llave trabada</label>
+                                        <label><input type="radio" name="reconectado_opcion" value="Se deriva para carro"> Se deriva para carro</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <label><input type="radio" name="verificacion" value="se encontró posible fraude" required> Se encontró posible fraude</label>
+                            
+                            <div id="fraude-opciones" class="conditional-field">
+                                <div class="form-group">
+                                    <label class="required">Derivar inspección para carro</label>
+                                    <div class="form-group">
+                                        <label for="fraude-detalle" class="required">Especifique el posible fraude:</label>
+                                        <input type="text" id="fraude-detalle" name="fraude_detalle" placeholder="Describa el posible fraude">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Predio</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="predio" value="1 planta" required> 1 planta</label>
+                            <label><input type="radio" name="predio" value="2 planta" required> 2 planta</label>
+                            <label><input type="radio" name="predio" value="3 planta" required> 3 planta</label>
+                            <label><input type="radio" name="predio" value="4 planta" required> 4 planta</label>
+                            <label><input type="radio" name="predio" value="condominio" required> condominio</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="color-verificacion" class="required">Color</label>
+                        <input type="text" id="color-verificacion" name="color" required placeholder="Ingrese el color">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Perno</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="perno" value="Se instala" required> Se instala</label>
+                            <label><input type="radio" name="perno" value="Se ajusta" required> Se ajusta</label>
+                            <label><input type="radio" name="perno" value="No se coloca" required> No se coloca</label>
+                        </div>
+                        <div id="perno-razon-verificacion" class="conditional-field">
+                            <label class="required">Seleccione la razón:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="perno_razon" value="no hay en stock"> No hay en stock</label>
+                                <label><input type="radio" name="perno_razon" value="tapa dañada"> Tapa dañada</label>
+                                <label><input type="radio" name="perno_razon" value="No se puede ajustar perno"> No se puede ajustar perno</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Observación Final</h2>
+                    <div class="form-group">
+                        <textarea id="observacion-verificacion" name="observacion" rows="3" placeholder="Escriba cualquier observación adicional"></textarea>
+                    </div>
+                </div>
+                    
+                <div class="buttons">
+                    <button type="button" class="btn-submit" onclick="generarResumenVerificacion()">Generar Reporte de Verificación</button>
+                </div>
+            </form>
+            
+            <div id="resumen-verificacion" class="resumen">
+                <div class="success-message">
+                    <h2>¡Reporte de Verificación Generado!</h2>
+                    <p>El siguiente es el resumen de la tarea realizada:</p>
+                </div>
+                
+                <h2>Resumen de la Verificación</h2>
+                <button id="copiar-resumen-verificacion" class="btn-copiar">📋 Copiar Resumen</button>
+                <div class="resumen-content" id="resumen-contenido-verificacion"></div>
+                
+                <div class="buttons" style="margin-top: 20px;">
+                    <button type="button" class="btn-volver" onclick="volverAlMenuPrincipal()">Volver al Menú Principal</button>
+                    <button type="button" style="background-color: #0e4f88; margin-left: 10px;" onclick="volverAlFormularioVerificacion()">Realizar Otra Verificación</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- FORMULARIOS DE ANÁLISIS DE CONSUMO -->
+        <!-- ============================================= -->
+
+        <!-- Formulario Residencial -->
+        <div id="formulario-residencial" class="formulario">
+            <header>
+                <h1>Formulario Residencial</h1>
+                <p>Complete todos los campos requeridos para el análisis de consumo</p>
+                <button class="btn-volver" onclick="volverAlSubmenuAnalisis()">← Volver al Menú Análisis</button>
+            </header>
+            
+            <form id="formResidencial">
+                <div class="form-section">
+                    <h2>Datos Básicos</h2>
+                    
+                    <div class="form-group">
+                        <label for="res-contrato" class="required">Contrato</label>
+                        <input type="number" id="res-contrato" name="contrato" required placeholder="Ingrese el número de contrato">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="res-servicio" class="required">Servicio</label>
+                        <select id="res-servicio" name="servicio" required>
+                            <option value="">Seleccione una opción</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Suspendido">Suspendido</option>
+                        </select>
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <label class="required">Estado del medidor</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="estado_medidor" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="estado_medidor" value="Mal estado" required> Mal estado</label>
+                            <label><input type="radio" name="estado_medidor" value="Visor Derio" required> Visor Derio</label>
+                            <label><input type="radio" name="estado_medidor" value="Paralizado" required> Paralizado</label>
+                            <label><input type="radio" name="estado_medidor" value="Otro" required> Otro</label>
+                        </div>
+                        
+                        <div id="res-estado-medidor-otro-field" class="conditional-field">
+                            <label for="res-estado-medidor-otro">Especifique el estado del medidor:</label>
+                            <input type="text" id="res-estado-medidor-otro" name="estado_medidor_otro" placeholder="Ingrese el estado del medidor">
+                        </div>
+                        
+                        <div id="res-cadena-custodio" class="conditional-field">
+                            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; border-left: 3px solid #f39c12; margin-top: 10px;">
+                                <label for="res-numero-modificacion">Se realiza cadena de custodio, número de sello, se modifica número</label>
+                                <input type="number" id="res-numero-modificacion" name="numero_modificacion" 
+                                    placeholder="00" style="width: 100px; margin: 0 5px;">
+                                por revisión de medida, se instala medidor
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="res-lectura-m3" class="required">Lectura (m³)</label>
+                        <input type="number" id="res-lectura-m3" name="lectura_m3" required placeholder="Ingrese la lectura en m³">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="res-lectura-litros">Lectura (litros)</label>
+                        <input type="number" id="res-lectura-litros" name="lectura_litros" placeholder="Ingrese la lectura en litros">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="res-descripcion" class="required">Descripción de casa</label>
+                        <input type="text" id="res-descripcion" name="descripcion" required placeholder="Describa la vivienda">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="res-personas" class="required">¿Cuántas personas habitan en el predio?</label>
+                        <input type="number" id="res-personas" name="personas" required placeholder="Ingrese el número de personas">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Información de Consumo</h2>
+                    
+                    <div class="form-group">
+                        <label for="res-abastecimiento" class="required">¿Cuál es su tipo de abastecimiento?</label>
+                        <select id="res-abastecimiento" name="abastecimiento" required>
+                            <option value="">Seleccione una opción</option>
+                            <option value="Directo">Directo</option>
+                            <option value="Cisterna">Cisterna</option>
+                            <option value="Tanque elevado">Tanque elevado</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                        <div id="res-abastecimiento-otro" class="conditional-field">
+                            <label for="res-abastecimiento-otro-text">Especifique el tipo de abastecimiento</label>
+                            <input type="text" id="res-abastecimiento-otro-text" name="abastecimiento_otro" placeholder="Ingrese el tipo de abastecimiento">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">¿Ha habido cambios en el número de habitantes en los últimos 6-12 meses?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="cambios_habitantes" value="Sí" required> Sí</label>
+                            <label><input type="radio" name="cambios_habitantes" value="No" required> No</label>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="form-section">
+                    <h2>Detección de Fugas</h2>
+                    
+                    <div class="form-group">
+                        <label class="required">¿Registra caudal de ingreso?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="caudal_ingreso" value="Sí" required> Sí</label>
+                            <label><input type="radio" name="caudal_ingreso" value="No" required> No</label>
+                        </div>
+                        <div id="res-caudal-detalle" class="conditional-field">
+                            <label for="res-caudal-cantidad">Cuantificar registro (Litros/min)</label>
+                            <input type="number" id="res-caudal-cantidad" name="caudal_cantidad" placeholder="Ingrese los litros por minuto">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Usuario permite realizar prueba de consumo</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="prueba_consumo" value="Sí" required> Sí</label>
+                            <label><input type="radio" name="prueba_consumo" value="No" required> No</label>
+                        </div>
+                        
+                        <div id="res-prueba-no-detalle" class="conditional-field">
+                            <label class="required">Especifique la razón:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="prueba_razon" value="usuario ausente"> Usuario ausente</label>
+                                <label><input type="radio" name="prueba_razon" value="usuario no permite el ingreso"> Usuario no permite el ingreso</label>
+                                <label><input type="radio" name="prueba_razon" value="otra"> Otra</label>
+                            </div>
+                            
+                            <div id="res-usuario-no-permite" class="conditional-field" style="margin-top: 10px;">
+                                <label for="res-motivo-no-permite">Motivo:</label>
+                                <input type="text" id="res-motivo-no-permite" name="motivo_no_permite" placeholder="Ingrese el motivo">
+                            </div>
+                            
+                            <div id="res-otra-razon" class="conditional-field" style="margin-top: 10px;">
+                                <label for="res-otra-razon-text">Especifique:</label>
+                                <input type="text" id="res-otra-razon-text" name="otra_razon" placeholder="Ingrese la razón">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="res-fugas-group">
+                        <label class="required">¿Ha detectado problemas de fugas?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="fugas_detectadas" value="No se detecto" required> No se detectó</label>
+                            <label><input type="radio" name="fugas_detectadas" value="Se detectó fuga visible" required> Se detectó fuga visible</label>
+                            <label><input type="radio" name="fugas_detectadas" value="Se detectó fuga no visible" required> Se detectó fuga no visible</label>
+                        </div>
+                        
+                        <div id="res-no-se-detecto" class="conditional-field">
+                            <label for="res-puntos-agua-no">Se revisaron</label>
+                            <input type="number" id="res-puntos-agua-no" name="puntos_agua_no" placeholder="00" min="1" max="99" style="width: 80px; display: inline-block; margin: 0 5px;">
+                            puntos de agua y se identificó que no existe fuga
+                        </div>
+                        
+                        <div id="res-fuga-visible-detalle" class="conditional-field">
+                            <label for="res-puntos-agua-si">Se revisaron</label>
+                            <input type="number" id="res-puntos-agua-si" name="puntos_agua_si" placeholder="00" min="1" max="99" style="width: 80px; display: inline-block; margin: 0 5px;">
+                            puntos de agua y se identificó que existe fuga en:
+                            <input type="text" id="res-ubicacion-fuga-detalle" name="ubicacion_fuga_detalle" placeholder="Describa la ubicación de la fuga" style="margin-top: 10px;">
+                        </div>
+                        
+                        <div id="res-recomendacion-fugas" class="info-message">
+                            <strong>Recomendación:</strong> Se recomienda al usuario el servicio de detección y reparación de fugas
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="res-persona-atendio-group">
+                        <label for="res-persona-atendio" class="required">Nombre de la persona que atendió</label>
+                        <input type="text" id="res-persona-atendio" name="persona_atendio" required placeholder="Ingrese el nombre completo">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Observación Final</h2>
+                    <div class="form-group">
+                        <label for="res-observacion">Observación final</label>
+                        <textarea id="res-observacion" name="observacion" rows="4" placeholder="Escriba cualquier observación adicional"></textarea>
+                    </div>
+                </div>
+                
+
+                <div class="form-section">
+                    <h2>Mantenimiento</h2>
+                    <div class="form-group">
+                        <div style="background-color: #e8f4fd; color: #0e4f88; padding: 12px 15px; border-left: 4px solid #3498db; border-radius: 5px; font-size: 15px;">
+                            <strong>Se realiza mantenimiento liviano al medidor</strong>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="buttons">
+                    <button type="button" class="btn-submit" onclick="generarResumenResidencial()">Generar Análisis</button>
+                </div>
+            </form>
+            
+            <div id="resumen-residencial" class="resumen">
+                <div class="success-message">
+                    <h2>¡Análisis Residencial Generado!</h2>
+                    <p>El siguiente es el resumen del análisis realizado:</p>
+                </div>
+                
+                <h2>Resumen del Análisis Residencial</h2>
+                <button id="copiar-resumen-residencial" class="btn-copiar">
+                    📋 Copiar Resumen
+                </button>
+                <div class="resumen-content" id="resumen-contenido-residencial">
+                    <!-- Aquí se generará el resumen -->
+                </div>
+                
+                <div class="buttons" style="margin-top: 20px;">
+                    <button type="button" class="btn-volver" onclick="volverAlSubmenuAnalisis()">Volver al Menú Análisis</button>
+                    <button type="button" style="background-color: #0e4f88; margin-left: 10px;" onclick="volverAlFormularioResidencial()">Realizar Otro Análisis</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario Comercial-Industrial -->
+        <div id="formulario-comercial" class="formulario">
+            <header>
+                <h1>Formulario Comercial - Industrial</h1>
+                <p>Complete todos los campos requeridos para el análisis de consumo</p>
+                <button class="btn-volver" onclick="volverAlSubmenuAnalisis()">← Volver al Menú Análisis</button>
+            </header>
+            
+            <form id="formComercial">
+                <div class="form-section">
+                    <h2>Datos Básicos</h2>
+                    
+                    <div class="form-group">
+                        <label for="com-contrato" class="required">Contrato</label>
+                        <input type="number" id="com-contrato" name="contrato" required placeholder="Ingrese el número de contrato">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="com-servicio" class="required">Servicio</label>
+                        <select id="com-servicio" name="servicio" required>
+                            <option value="">Seleccione una opción</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Suspendido">Suspendido</option>
+                        </select>
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <label class="required">Estado del medidor</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="estado_medidor" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="estado_medidor" value="Mal estado" required> Mal estado</label>
+                            <label><input type="radio" name="estado_medidor" value="Visor Derio" required> Visor Derio</label>
+                            <label><input type="radio" name="estado_medidor" value="Paralizado" required> Paralizado</label>
+                            <label><input type="radio" name="estado_medidor" value="Otro" required> Otro</label>
+                        </div>
+                        
+                        <div id="com-estado-medidor-otro-field" class="conditional-field">
+                            <label for="com-estado-medidor-otro">Especifique el estado del medidor:</label>
+                            <input type="text" id="com-estado-medidor-otro" name="estado_medidor_otro" placeholder="Ingrese el estado del medidor">
+                        </div>
+                        
+                        <div id="com-cadena-custodio" class="conditional-field">
+                            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; border-left: 3px solid #f39c12; margin-top: 10px;">
+                                <label for="com-numero-modificacion">Se realiza cadena de custodio, número de sello, se modifica número</label>
+                                <input type="number" id="com-numero-modificacion" name="numero_modificacion" 
+                                    placeholder="00" style="width: 100px; margin: 0 5px;">
+                                por revisión de medida, se instala medidor
+                            </div>
+                        </div>
+                    </div>                                        
+
+                    <div class="form-group">
+                        <label for="com-lectura-m3" class="required">Lectura (m³)</label>
+                        <input type="number" id="com-lectura-m3" name="lectura_m3" required placeholder="Ingrese la lectura en m³">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="com-lectura-litros">Lectura (litros)</label>
+                        <input type="number" id="com-lectura-litros" name="lectura_litros" placeholder="Ingrese la lectura en litros">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="com-descripcion" class="required">Descripción del local/industria</label>
+                        <input type="text" id="com-descripcion" name="descripcion" required placeholder="Describa el local o industria">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="com-actividad" class="required">¿Qué actividad llevan a cabo?</label>
+                        <input type="text" id="com-actividad" name="actividad" required placeholder="Describa la actividad">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="com-empleados" class="required">¿Cuántos empleados/personas trabajan diariamente en el predio?</label>
+                        <input type="number" id="com-empleados" name="empleados" required placeholder="Ingrese el número de empleados">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Información Operativa</h2>
+                    
+                    <div class="form-group">
+                        <label for="com-abastecimiento" class="required">¿Cuál es su tipo de abastecimiento?</label>
+                        <select id="com-abastecimiento" name="abastecimiento" required>
+                            <option value="">Seleccione una opción</option>
+                            <option value="Directo">Directo</option>
+                            <option value="Cisterna">Cisterna</option>
+                            <option value="Tanque elevado">Tanque elevado</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                        <div id="com-abastecimiento-otro" class="conditional-field">
+                            <label for="com-abastecimiento-otro-text">Especifique el tipo de abastecimiento</label>
+                            <input type="text" id="com-abastecimiento-otro-text" name="abastecimiento_otro" placeholder="Ingrese el tipo de abastecimiento">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">¿Tienen horarios específicos de operación?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="horarios_especificos" value="Sí" required> Sí</label>
+                            <label><input type="radio" name="horarios_especificos" value="No" required> No</label>
+                        </div>
+                        <div id="com-horario-detalle" class="conditional-field">
+                            <label for="com-horario">Indique el horario</label>
+                            <input type="text" id="com-horario" name="horario" placeholder="Ej: Lunes a Viernes 8:00-18:00">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">¿Cómo es el consumo?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="tipo_consumo" value="constante todos los días" required> Constante todos los días</label>
+                            <label><input type="radio" name="tipo_consumo" value="varía según producción/actividad" required> Varía según producción/actividad</label>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="form-section">
+                    <h2>Detección de Fugas</h2>
+                    
+                    <div class="form-group">
+                        <label class="required">¿Registra caudal de ingreso?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="caudal_ingreso" value="Sí" required> Sí</label>
+                            <label><input type="radio" name="caudal_ingreso" value="No" required> No</label>
+                        </div>
+                        <div id="com-caudal-detalle" class="conditional-field">
+                            <label for="com-caudal-cantidad">Cuantificar registro (Litros/min)</label>
+                            <input type="number" id="com-caudal-cantidad" name="caudal_cantidad" placeholder="Ingrese los litros por minuto">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Usuario permite realizar prueba de consumo</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="prueba_consumo" value="Sí" required> Sí</label>
+                            <label><input type="radio" name="prueba_consumo" value="No" required> No</label>
+                        </div>
+                        
+                        <div id="com-prueba-no-detalle" class="conditional-field">
+                            <label class="required">Especifique la razón:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="prueba_razon" value="usuario ausente"> Usuario ausente</label>
+                                <label><input type="radio" name="prueba_razon" value="usuario no permite el ingreso"> Usuario no permite el ingreso</label>
+                                <label><input type="radio" name="prueba_razon" value="otra"> Otra</label>
+                            </div>
+                            
+                            <div id="com-usuario-no-permite" class="conditional-field" style="margin-top: 10px;">
+                                <label for="com-motivo-no-permite">Motivo:</label>
+                                <input type="text" id="com-motivo-no-permite" name="motivo_no_permite" placeholder="Ingrese el motivo">
+                            </div>
+                            
+                            <div id="com-otra-razon" class="conditional-field" style="margin-top: 10px;">
+                                <label for="com-otra-razon-text">Especifique:</label>
+                                <input type="text" id="com-otra-razon-text" name="otra_razon" placeholder="Ingrese la razón">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="com-fugas-group">
+                        <label class="required">¿Ha detectado problemas de fugas?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="fugas_detectadas" value="No se detecto" required> No se detectó</label>
+                            <label><input type="radio" name="fugas_detectadas" value="Se detectó fuga visible" required> Se detectó fuga visible</label>
+                            <label><input type="radio" name="fugas_detectadas" value="Se detectó fuga no visible" required> Se detectó fuga no visible</label>
+                        </div>
+                        
+                        <div id="com-no-se-detecto" class="conditional-field">
+                            <label for="com-puntos-agua-no">Se revisaron</label>
+                            <input type="number" id="com-puntos-agua-no" name="puntos_agua_no" placeholder="00" min="1" max="99" style="width: 80px; display: inline-block; margin: 0 5px;">
+                            puntos de agua y se identificó que no existe fuga
+                        </div>
+                        
+                        <div id="com-fuga-visible-detalle" class="conditional-field">
+                            <label for="com-puntos-agua-si">Se revisaron</label>
+                            <input type="number" id="com-puntos-agua-si" name="puntos_agua_si" placeholder="00" min="1" max="99" style="width: 80px; display: inline-block; margin: 0 5px;">
+                            puntos de agua y se identificó que existe fuga en:
+                            <input type="text" id="com-ubicacion-fuga-detalle" name="ubicacion_fuga_detalle" placeholder="Describa la ubicación de la fuga" style="margin-top: 10px;">
+                        </div>
+                        
+                        <div id="com-recomendacion-fugas" class="info-message">
+                            <strong>Recomendación:</strong> Se recomienda al usuario el servicio de detección y reparación de fugas
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="com-persona-atendio-group">
+                        <label for="com-persona-atendio" class="required">Nombre de la persona que atendió</label>
+                        <input type="text" id="com-persona-atendio" name="persona_atendio" required placeholder="Ingrese el nombre completo">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Observación Final</h2>
+                    <div class="form-group">
+                        <label for="res-observacion">Observación final</label>
+                        <textarea id="res-observacion" name="observacion" rows="4" placeholder="Escriba cualquier observación adicional"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Mantenimiento</h2>
+                    <div class="form-group">
+                        <div style="background-color: #e8f4fd; color: #0e4f88; padding: 12px 15px; border-left: 4px solid #3498db; border-radius: 5px; font-size: 15px;">
+                            <strong>Se realiza mantenimiento liviano al medidor</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <button type="button" class="btn-submit" onclick="generarResumenComercial()">Generar Análisis</button>
+                </div>
+            </form>
+            
+            <div id="resumen-comercial" class="resumen">
+                <div class="success-message">
+                    <h2>¡Análisis Comercial-Industrial Generado!</h2>
+                    <p>El siguiente es el resumen del análisis realizado:</p>
+                </div>
+                
+                <h2>Resumen del Análisis Comercial-Industrial</h2>
+                <button id="copiar-resumen-comercial" class="btn-copiar">
+                    📋 Copiar Resumen
+                </button>
+                <div class="resumen-content" id="resumen-contenido-comercial">
+                    <!-- Aquí se generará el resumen -->
+                </div>
+                
+                <div class="buttons" style="margin-top: 20px;">
+                    <button type="button" class="btn-volver" onclick="volverAlSubmenuAnalisis()">Volver al Menú Análisis</button>
+                    <button type="button" style="background-color: #0e4f88; margin-left: 10px;" onclick="volverAlFormularioComercial()">Realizar Otro Análisis</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
