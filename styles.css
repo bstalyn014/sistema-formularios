@@ -58,12 +58,6 @@ header {
 h1 {
     color: var(--primary-color);
     margin-bottom: 10px;
-    font-size: 28px;
-}
-
-p {
-    color: #666;
-    margin-bottom: 5px;
 }
 
 .btn-volver {
@@ -77,12 +71,11 @@ p {
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 .btn-volver:hover {
     background-color: #5a6268;
-    transform: translateY(-2px);
 }
 
 .menu-options {
@@ -132,13 +125,11 @@ p {
 .menu-card h3 {
     color: var(--primary-color);
     margin-bottom: 10px;
-    font-size: 22px;
 }
 
 .menu-card p {
     color: #666;
     font-size: 14px;
-    line-height: 1.5;
 }
 
 /* ============================================= */
@@ -167,7 +158,6 @@ h2 {
     margin-bottom: 20px;
     border-bottom: 2px solid var(--light-color);
     padding-bottom: 10px;
-    font-size: 22px;
 }
 
 .form-group {
@@ -183,7 +173,6 @@ label {
     margin-bottom: 8px;
     font-weight: 600;
     color: var(--primary-color);
-    font-size: 16px;
 }
 
 input[type="text"],
@@ -195,8 +184,7 @@ textarea {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
-    transition: all 0.3s ease;
-    background-color: white;
+    transition: border-color 0.3s;
 }
 
 input:focus,
@@ -204,7 +192,7 @@ select:focus,
 textarea:focus {
     border-color: var(--secondary-color);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
 
 .radio-group {
@@ -217,7 +205,6 @@ textarea:focus {
     margin-bottom: 8px;
     font-weight: normal;
     cursor: pointer;
-    font-size: 15px;
 }
 
 input[type="radio"] {
@@ -226,36 +213,22 @@ input[type="radio"] {
 }
 
 .conditional-field {
-    margin-top: 15px;
-    padding: 15px;
+    margin-top: 10px;
+    padding: 10px;
     background-color: #fff;
     border-radius: 5px;
     border-left: 3px solid var(--warning-color);
     display: none;
-    animation: fadeIn 0.3s ease;
 }
 
 .conditional-field.active {
     display: block;
-}
-
-.info-message {
-    margin-top: 10px;
-    padding: 12px;
-    background-color: #e8f4fd;
-    border-radius: 5px;
-    border-left: 3px solid var(--secondary-color);
-    display: none;
-    font-size: 14px;
-}
-
-.info-message.active {
-    display: block;
+    animation: fadeIn 0.3s ease;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .buttons {
@@ -282,8 +255,6 @@ button {
 
 .btn-submit:hover {
     background-color: #219653;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* ============================================= */
@@ -298,11 +269,22 @@ button {
     display: none;
     margin-top: 20px;
     border-left: 5px solid var(--success-color);
-    animation: fadeIn 0.5s ease;
 }
 
 .resumen.active {
     display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.info-message {
+    background-color: #e8f4fd;
+    color: #0c5460;
+    padding: 10px;
+    border-radius: 4px;
+    border-left: 4px solid #17a2b8;
+    margin-top: 10px;
+    font-size: 0.9em;
+    display: none; /* Hidden by default */
 }
 
 .resumen-content {
@@ -314,8 +296,6 @@ button {
     font-size: 16px;
     border: 1px solid #e9ecef;
     margin-bottom: 20px;
-    max-height: 400px;
-    overflow-y: auto;
 }
 
 .success-message {
@@ -327,17 +307,10 @@ button {
     margin-bottom: 20px;
 }
 
-.success-message h2 {
-    color: #155724;
-    border-bottom: none;
-    margin-bottom: 10px;
-}
-
 .field-note {
     font-size: 12px;
     color: #6c757d;
     margin-top: 5px;
-    font-style: italic;
 }
 
 .required::after {
@@ -383,7 +356,49 @@ button {
 }
 
 /* ============================================= */
-/* ESTILOS PARA DATALIST Y BÚSQUEDA */
+/* ESTILOS RESPONSIVE */
+/* ============================================= */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .menu-options {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .menu-card {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .form-section {
+        padding: 15px;
+    }
+    
+    .buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    button {
+        width: 100%;
+    }
+    
+    header {
+        padding-top: 60px;
+    }
+    
+    .btn-volver {
+        top: 10px;
+        left: 10px;
+    }
+}
+
+/* ============================================= */
+/* ESTILOS ESPECIALES PARA DATALIST */
 /* ============================================= */
 
 datalist {
@@ -405,7 +420,7 @@ input[list] {
 }
 
 /* ============================================= */
-/* ESTILOS ESPECIALES PARA CAMPOS */
+/* ESTILOS PARA CAMPOS DESHABILITADOS */
 /* ============================================= */
 
 .form-group[style*="opacity: 0.5"] {
@@ -422,260 +437,4 @@ input[list] {
     background-color: #f5f5f5;
     color: #888;
     cursor: not-allowed;
-}
-
-/* Estilo para los inputs de puntos de agua */
-input[type="number"][placeholder="00"] {
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Estilo para el campo de número en la cadena de custodio */
-input[placeholder="Número"] {
-    text-align: center;
-    font-weight: bold;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 8px;
-}
-
-/* Estilo para campo de medida de rotura */
-#rotura-medida {
-    display: none;
-    padding: 6px 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    margin-left: 10px;
-}
-
-#rotura-medida:focus {
-    border-color: var(--secondary-color);
-    outline: none;
-}
-
-/* ============================================= */
-/* ESTILOS RESPONSIVE */
-/* ============================================= */
-
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-    
-    header {
-        padding: 15px;
-        padding-top: 60px;
-    }
-    
-    .btn-volver {
-        top: 10px;
-        left: 10px;
-        padding: 6px 12px;
-        font-size: 13px;
-    }
-    
-    h1 {
-        font-size: 24px;
-    }
-    
-    .menu-options {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .menu-card {
-        width: 100%;
-        max-width: 100%;
-        padding: 20px;
-    }
-    
-    .menu-icon {
-        font-size: 36px;
-    }
-    
-    .form-section {
-        padding: 15px;
-    }
-    
-    h2 {
-        font-size: 20px;
-    }
-    
-    .form-group {
-        padding: 12px;
-    }
-    
-    .buttons {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    button {
-        width: 100%;
-        margin: 5px 0;
-    }
-    
-    .resumen-content {
-        padding: 15px;
-        font-size: 15px;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 20px;
-    }
-    
-    .menu-card h3 {
-        font-size: 18px;
-    }
-    
-    .menu-card p {
-        font-size: 13px;
-    }
-    
-    label {
-        font-size: 15px;
-    }
-    
-    input[type="text"],
-    input[type="number"],
-    select,
-    textarea {
-        padding: 10px;
-        font-size: 15px;
-    }
-    
-    .btn-copiar, .btn-submit {
-        padding: 10px 15px;
-        font-size: 15px;
-    }
-}
-
-/* ============================================= */
-/* ESTILOS PARA SCROLLBAR PERSONALIZADA */
-/* ============================================= */
-
-.resumen-content::-webkit-scrollbar {
-    width: 8px;
-}
-
-.resumen-content::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-}
-
-.resumen-content::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
-}
-
-.resumen-content::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-/* ============================================= */
-/* ESTILOS PARA MENSAJES DE ERROR/ÉXITO */
-/* ============================================= */
-
-.error-message {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 12px;
-    border-radius: 5px;
-    border-left: 4px solid #dc3545;
-    margin-bottom: 15px;
-    display: none;
-}
-
-.error-message.active {
-    display: block;
-}
-
-.warning-message {
-    background-color: #fff3cd;
-    color: #856404;
-    padding: 12px;
-    border-radius: 5px;
-    border-left: 4px solid #ffc107;
-    margin-bottom: 15px;
-    display: none;
-}
-
-.warning-message.active {
-    display: block;
-}
-
-/* ============================================= */
-/* ESTILOS PARA BOTONES ADICIONALES */
-/* ============================================= */
-
-.btn-secondary {
-    background-color: #6c757d;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268;
-}
-
-.btn-primary {
-    background-color: #0e4f88;
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #0c4273;
-}
-
-/* ============================================= */
-/* ESTILOS PARA SEPARADORES */
-/* ============================================= */
-
-hr {
-    border: none;
-    border-top: 1px solid #e0e0e0;
-    margin: 20px 0;
-}
-
-/* ============================================= */
-/* ESTILOS PARA GRUPOS DE CAMPOS ESPECIALES */
-/* ============================================= */
-
-.form-group.highlighted {
-    background-color: #e8f4fd;
-    border-left-color: #3498db;
-}
-
-.form-group.warning {
-    background-color: #fff3cd;
-    border-left-color: #ffc107;
-}
-
-.form-group.error {
-    background-color: #f8d7da;
-    border-left-color: #dc3545;
-}
-
-/* ============================================= */
-/* ESTILOS PARA ETIQUETAS DE GRUPO */
-/* ============================================= */
-
-.group-label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.group-label-text {
-    font-weight: bold;
-    color: var(--primary-color);
-}
-
-.group-label-note {
-    font-size: 12px;
-    color: #6c757d;
-    font-style: italic;
 }
