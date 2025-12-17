@@ -1,46 +1,49 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-    /* Paleta de Colores Premium */
-    --primary-color: #0F172A;     /* Slate 900 */
+    /* Paleta de Colores Ultra-Modern (Mejorada) */
+    --primary-color: #0F172A;     /* Slate 900 - Base Oscura */
     --primary-light: #334155;     /* Slate 700 */
-    --accent-color: #3B82F6;      /* Blue 500 */
-    --accent-hover: #2563EB;      /* Blue 600 */
+    
+    /* Acentos más vibrantes */
+    --accent-color: #2563EB;      /* Blue 600 - Principal */
+    --accent-gradient: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); /* Gradiente Azul */
+    --accent-glow: rgba(59, 130, 246, 0.5);
     --accent-light: #EFF6FF;      /* Blue 50 */
     
     --success-color: #10B981;     /* Emerald 500 */
-    --success-bg: #D1FAE5;        /* Emerald 100 */
+    --success-bg: #ECFDF5;        /* Emerald 50 */
     --warning-color: #F59E0B;     /* Amber 500 */
-    --warning-bg: #FEF3C7;        /* Amber 100 */
+    --warning-bg: #FFFBEB;        /* Amber 50 */
     --danger-color: #EF4444;      /* Red 500 */
     
-    --bg-body: #F8FAFC;           /* Slate 50 */
+    --bg-body: #F1F5F9;           /* Slate 100 - Un poco más fresco */
     --bg-surface: #FFFFFF;
     
     --text-main: #1E293B;         /* Slate 800 */
     --text-muted: #64748B;        /* Slate 500 */
-    --text-light: #94A3B8;        /* Slate 400 */
     
     --border-color: #E2E8F0;      /* Slate 200 */
-    --border-focus: #BFDBFE;      /* Blue 200 */
     
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 24px;
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 100px;
     
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    /* Sombras Elevadas y Suaves */
+    --shadow-sm: 0 2px 4px rgba(148, 163, 184, 0.1);
+    --shadow-md: 0 8px 16px -4px rgba(148, 163, 184, 0.1);
+    --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+    --shadow-glow: 0 0 15px var(--accent-glow);
     
-    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -49,55 +52,65 @@ body {
     color: var(--text-main);
     line-height: 1.6;
     background-image: 
-        radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-        radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
-        radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
-    background-size: 100% 600px;
-    background-repeat: no-repeat;
+        radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 20%);
     min-height: 100vh;
     padding-bottom: 60px;
 }
 
 .container {
-    max-width: 850px;
+    max-width: 900px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
 /* ============================================= */
-/* HEADER & NAVIGATION */
+/* HEADER DE CRISTAL (Glassmorphism) */
 /* ============================================= */
 
 header {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 40px 30px;
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-xl);
+    background: rgba(255, 255, 255, 0.85); /* Más transparencia */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 50px 30px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
     text-align: center;
     margin-bottom: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 1);
     position: relative;
     overflow: hidden;
+}
+
+/* Barra superior decorativa */
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: var(--accent-gradient);
 }
 
 header h1 {
     font-family: 'Outfit', sans-serif;
     color: var(--primary-color);
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 12px;
+    font-size: 2.75rem;
+    font-weight: 800;
+    margin-bottom: 15px;
     letter-spacing: -0.02em;
-    background: linear-gradient(to right, #0F172A, #3B82F6);
+    background: linear-gradient(to right, #1e293b, #3b82f6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 header p {
     color: var(--text-muted);
-    font-size: 1.1rem;
-    max-width: 600px;
+    font-size: 1.15rem;
+    max-width: 650px;
     margin: 0 auto;
+    font-weight: 500;
 }
 
 .btn-volver {
@@ -107,27 +120,27 @@ header p {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 16px;
+    padding: 10px 20px;
     background: white;
     color: var(--text-muted);
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     text-decoration: none;
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
-    border: 1px solid var(--border-color);
+    border: 1px solid transparent;
 }
 
 .btn-volver:hover {
-    transform: translateX(-4px);
+    transform: translateY(-2px);
     color: var(--accent-color);
-    border-color: var(--accent-color);
+    background: var(--accent-light);
     box-shadow: var(--shadow-md);
 }
 
 /* ============================================= */
-/* MENÚ TARJETAS EXQUISITO */
+/* MENÚ CON EFECTOS 3D */
 /* ============================================= */
 
 .menu-section {
@@ -150,6 +163,7 @@ header p {
     text-decoration: none;
     color: inherit;
     display: block;
+    height: 100%;
 }
 
 .menu-card {
@@ -158,34 +172,38 @@ header p {
     padding: 40px 30px;
     text-align: center;
     height: 100%;
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(255,255,255,0.5);
     box-shadow: var(--shadow-md);
     transition: var(--transition);
     position: relative;
     overflow: hidden;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.menu-card::before {
+.menu-card::after {
     content: '';
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
-    right: 0;
+    width: 100%;
     height: 4px;
-    background: linear-gradient(90deg, var(--accent-color), #8B5CF6);
-    opacity: 0;
-    transition: var(--transition);
+    background: var(--accent-gradient);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: center;
 }
 
 .menu-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-xl);
-    border-color: transparent;
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
 }
 
-.menu-card:hover::before {
-    opacity: 1;
+.menu-card:hover::after {
+    transform: scaleX(1);
 }
 
 .menu-icon {
@@ -195,14 +213,15 @@ header p {
     padding: 20px;
     background: var(--accent-light);
     border-radius: 50%;
-    /* Truco para emoji visualmente placentero */
-    filter: drop-shadow(0 4px 6px rgba(59, 130, 246, 0.2));
     transition: var(--transition);
+    color: var(--accent-color);
 }
 
 .menu-card:hover .menu-icon {
+    background: var(--accent-color);
+    color: white;
     transform: scale(1.1) rotate(5deg);
-    background: #DBEAFE;
+    box-shadow: var(--shadow-glow);
 }
 
 .menu-card h3 {
@@ -215,12 +234,11 @@ header p {
 
 .menu-card p {
     color: var(--text-muted);
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 1.05rem;
 }
 
 /* ============================================= */
-/* FORMULARIOS MODERNOS */
+/* FORMULARIOS LIMPIOS Y MODERNOS */
 /* ============================================= */
 
 .formulario {
@@ -238,17 +256,17 @@ header p {
     padding: 40px;
     margin-bottom: 30px;
     box-shadow: var(--shadow-md);
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(226, 232, 240, 0.6);
 }
 
 .form-section h2 {
     font-family: 'Outfit', sans-serif;
     color: var(--primary-color);
-    font-size: 1.35rem;
-    font-weight: 600;
+    font-size: 1.4rem;
+    font-weight: 700;
     margin-bottom: 30px;
     padding-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--bg-body);
     display: flex;
     align-items: center;
     gap: 12px;
@@ -258,8 +276,8 @@ header p {
     content: '';
     display: block;
     width: 6px;
-    height: 24px;
-    background: var(--accent-color);
+    height: 28px;
+    background: var(--accent-gradient);
     border-radius: 4px;
 }
 
@@ -268,40 +286,40 @@ header p {
     padding: 24px;
     border-radius: var(--radius-md);
     margin-bottom: 24px;
-    border: 1px solid transparent;
+    border: 1px solid transparent; /* Reserva espacio para borde */
     transition: var(--transition);
 }
 
 .form-group:hover, .form-group:focus-within {
     background: white;
-    border-color: var(--border-focus);
     box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 label {
     display: block;
     margin-bottom: 10px;
     font-weight: 600;
-    color: var(--text-main);
-    font-size: 0.95rem;
-    letter-spacing: 0.01em;
+    color: var(--primary-color);
+    font-size: 1rem;
 }
 
 .required::after {
     content: "*";
     color: var(--danger-color);
     margin-left: 4px;
-    font-size: 1.1em;
+    font-size: 1.25em;
+    line-height: 0;
 }
 
-/* Inputs de Alta Calidad */
+/* Inputs con Efecto Glow */
 input[type="text"],
 input[type="number"],
 select,
 textarea {
     width: 100%;
-    padding: 14px 16px;
-    border: 1px solid var(--border-color);
+    padding: 14px 18px;
+    border: 2px solid var(--border-color);
     border-radius: var(--radius-sm);
     font-size: 1rem;
     color: var(--text-main);
@@ -319,7 +337,7 @@ select:focus,
 textarea:focus {
     border-color: var(--accent-color);
     outline: none;
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15); /* Glow suave */
 }
 
 input::placeholder {
@@ -331,7 +349,7 @@ textarea {
     min-height: 120px;
 }
 
-/* Radio Buttons Rediseñados */
+/* Radio Buttons Custom (Estilo moderno) */
 .radio-group {
     display: flex;
     flex-direction: column;
@@ -344,7 +362,7 @@ textarea {
     background: white;
     padding: 16px 20px;
     border-radius: var(--radius-sm);
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--border-color);
     margin-bottom: 0;
     cursor: pointer;
     transition: var(--transition);
@@ -355,16 +373,15 @@ textarea {
 }
 
 .radio-group label:hover {
-    border-color: var(--border-focus);
-    background: var(--accent-light);
-    color: var(--accent-color);
+    border-color: var(--accent-color);
+    background: #f8fafc;
 }
 
 .radio-group input[type="radio"] {
     appearance: none;
     -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border: 2px solid #cbd5e1;
     border-radius: 50%;
     margin-right: 16px;
@@ -376,7 +393,7 @@ textarea {
 .radio-group input[type="radio"]:checked {
     border-color: var(--accent-color);
     background-color: var(--accent-color);
-    box-shadow: 0 0 0 3px var(--accent-light);
+    box-shadow: 0 0 0 4px var(--accent-light);
 }
 
 .radio-group input[type="radio"]:checked::after {
@@ -395,7 +412,7 @@ textarea {
     border-color: var(--accent-color);
     background: var(--accent-light);
     color: var(--accent-color);
-    font-weight: 600;
+    font-weight: 700;
     box-shadow: var(--shadow-sm);
 }
 
@@ -403,22 +420,11 @@ textarea {
 .conditional-field {
     margin-top: 20px;
     padding: 24px;
-    background: #FFFBEB; /* Amber 50 */
+    background: var(--warning-bg);
     border-radius: var(--radius-md);
-    border: 1px solid #FCD34D;
+    border-left: 5px solid var(--warning-color);
     display: none;
-    box-shadow: var(--shadow-sm);
     animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-}
-
-.conditional-field::before {
-    content: '⚠️';
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    font-size: 1.2rem;
-    opacity: 0.5;
 }
 
 .conditional-field.active {
@@ -456,9 +462,9 @@ textarea {
 }
 
 button {
-    padding: 16px 32px;
+    padding: 16px 36px;
     border: none;
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
@@ -468,36 +474,30 @@ button {
 }
 
 .btn-submit {
-    background: var(--accent-color);
+    background: var(--accent-gradient);
     color: white;
-    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
 }
 
 .btn-submit:hover {
-    background: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 12px rgba(59, 130, 246, 0.4);
-}
-
-.btn-submit:active {
-    transform: translateY(0);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
 }
 
 .btn-volver-resumen, button[onclick*="volver"] {
     background: white;
     color: var(--text-muted);
-    border: 1px solid var(--border-color);
-    padding: 16px 32px;
+    border: 2px solid var(--border-color);
 }
 
 .btn-volver-resumen:hover, button[onclick*="volver"]:hover {
-    background: #f1f5f9;
+    background: white;
     color: var(--text-main);
-    border-color: #cbd5e1;
+    border-color: var(--text-main);
 }
 
 /* ============================================= */
-/* RESUMEN DE LUJO */
+/* RESUMEN ESTILO TERMINAL MODERNO */
 /* ============================================= */
 
 .resumen {
@@ -511,14 +511,13 @@ button {
 }
 
 .success-message {
-    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
-    color: #064E3B;
+    background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    color: white;
     padding: 40px;
     border-radius: var(--radius-lg);
     text-align: center;
     margin-bottom: 30px;
-    box-shadow: var(--shadow-md);
-    border: 1px solid #A7F3D0;
+    box-shadow: var(--shadow-lg);
     position: relative;
     overflow: hidden;
 }
@@ -527,14 +526,12 @@ button {
     font-family: 'Outfit', sans-serif;
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 12px;
-    background: linear-gradient(to right, #059669, #10B981);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    color: white;
 }
 
 .btn-copiar {
-    background: var(--text-main);
+    background: var(--primary-color);
     color: white;
     width: 100%;
     margin-bottom: 30px;
@@ -548,10 +545,11 @@ button {
     gap: 12px;
     transition: var(--transition);
     border: none;
+    box-shadow: var(--shadow-md);
 }
 
 .btn-copiar:hover {
-    background: var(--primary-color);
+    background: black;
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
 }
@@ -561,14 +559,14 @@ button {
 }
 
 .resumen-content {
-    background: #1E293B; /* Tema oscuro para código */
+    background: #1E293B; /* Slate 800 */
     padding: 30px;
     border-radius: var(--radius-lg);
     font-family: 'Consolas', 'Monaco', monospace;
     font-size: 1rem;
     line-height: 1.8;
-    color: #E2E8F0;
-    box-shadow: var(--shadow-xl);
+    color: #F1F5F9;
+    box-shadow: var(--shadow-lg);
     margin-bottom: 40px;
     white-space: pre-wrap;
     border: 1px solid #334155;
@@ -576,14 +574,15 @@ button {
 }
 
 .resumen-content::before {
-    content: 'PREVIEW';
+    content: '⚫ Vista Previa';
     position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 0.7rem;
-    color: #64748B;
+    top: 15px;
+    right: 20px;
+    font-size: 0.75rem;
+    color: #94A3B8;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 .field-note {
@@ -593,10 +592,11 @@ button {
     display: flex;
     align-items: center;
     gap: 6px;
+    font-weight: 500;
 }
 
 /* ============================================= */
-/* ANIMACIONES PULIDAS */
+/* ANIMACIONES */
 /* ============================================= */
 
 @keyframes fadeIn {
@@ -620,7 +620,7 @@ button {
 
 @media (max-width: 768px) {
     header {
-        padding: 30px 20px;
+        padding: 40px 20px;
     }
     
     header h1 {
