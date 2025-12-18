@@ -202,4 +202,23 @@ function generarResumenResidencial() {
     resumen += `Mantenimiento: Se realiza mantenimiento liviano al medidor.`;
     
     mostrarResumen('residencial', resumen);
+
+
+    
+    // Agregar botón de guardar si no existe
+    if (!document.getElementById('btn-guardar-residencial')) {
+        const resumenDiv = document.getElementById('resumen-residencial');
+        const botonCopiar = document.getElementById('copiar-resumen-residencial');
+        
+        const botonGuardar = document.createElement('button');
+        botonGuardar.type = 'button';
+        botonGuardar.id = 'btn-guardar-residencial';
+        botonGuardar.className = 'btn-guardar';
+        botonGuardar.innerHTML = '💾 Guardar en Google Sheets';
+        botonGuardar.onclick = () => guardarResidencialEnSheets();
+        
+        botonCopiar.parentNode.insertBefore(botonGuardar, botonCopiar.nextSibling);
+    }
+
+
 }

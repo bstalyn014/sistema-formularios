@@ -72,6 +72,20 @@ function generarResumenReconexion() {
     if (observacion && observacion.trim() !== '') resumen += `, Observación: ${observacion}`;
     
     mostrarResumen('reconexion', resumen);
+
+    // Agregar botón de guardar si no existe
+    if (!document.getElementById('btn-guardar-reconexion')) {
+        const botonCopiar = document.getElementById('copiar-resumen-reconexion');
+        
+        const botonGuardar = document.createElement('button');
+        botonGuardar.type = 'button';
+        botonGuardar.id = 'btn-guardar-reconexion';
+        botonGuardar.className = 'btn-guardar';
+        botonGuardar.innerHTML = '💾 Guardar en Google Sheets';
+        botonGuardar.onclick = () => guardarReconexionEnSheets();
+        
+        botonCopiar.parentNode.insertBefore(botonGuardar, botonCopiar.nextSibling);
+    }
 }
 
 const itemsCobroData = [

@@ -196,4 +196,22 @@ function generarResumenComercial() {
     resumen += `Mantenimiento: Se realiza mantenimiento liviano al medidor.`;
     
     mostrarResumen('comercial', resumen);
+
+
+    // Agregar botón de guardar si no existe
+    if (!document.getElementById('btn-guardar-comercial')) {
+        const botonCopiar = document.getElementById('copiar-resumen-comercial');
+        
+        const botonGuardar = document.createElement('button');
+        botonGuardar.type = 'button';
+        botonGuardar.id = 'btn-guardar-comercial';
+        botonGuardar.className = 'btn-guardar';
+        botonGuardar.innerHTML = '💾 Guardar en Google Sheets';
+        botonGuardar.onclick = () => guardarComercialEnSheets();
+        
+        botonCopiar.parentNode.insertBefore(botonGuardar, botonCopiar.nextSibling);
+    }
+
+
+
 }
