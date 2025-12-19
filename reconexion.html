@@ -19,12 +19,12 @@
                 <div class="form-section">
                     <h2>Item de Cobro</h2>
                     <div class="form-group">
-                        <label for="item-cobro">Seleccione o busque un ítem de cobro:</label>
-                        <input type="text" id="item-cobro" name="item_cobro" list="items-cobro-list" placeholder="Escriba para buscar o seleccionar un ítem">
-                        <datalist id="items-cobro-list">
-                            <!-- JS populated -->
-                        </datalist>
-
+                        <label for="search-item-cobro">Seleccione o busque un ítem de cobro:</label>
+                        <div class="custom-search-container">
+                            <input type="text" id="search-item-cobro" placeholder="Escriba para buscar..." autocomplete="off">
+                            <input type="hidden" id="selected-item-cobro" name="item_cobro">
+                            <ul id="results-item-cobro" class="search-results"></ul>
+                        </div>
                     </div>
                 </div>
                 
@@ -206,11 +206,7 @@
                 
                 <div class="buttons">
                     <button type="button" class="btn-submit" onclick="generarResumenReconexion()">Generar Reporte de Reconexión</button>
-                    
-                    
                     <!-- <button type="button" class="btn-guardar" onclick="guardarReconexionEnSheets()">💾 Guardar en Google Sheets</button> -->
-
-                    
                 </div>
             </form>
             
@@ -226,7 +222,7 @@
                 
                 <div class="buttons" style="margin-top: 20px;">
                     <a href="index.html" class="btn-volver">Volver al Menú Principal</a>
-                    <button type="button" style="background-color: #0e4f88; margin-left: 10px;" onclick="volverAlFormulario('reconexion')">Realizar Otra Reconexión</button>
+                    <button type="button" style="background-color: #0e4f88; margin-left: 10px;" onclick="volverAlFormulario('reconexion')">Realizar Otro Reconexión</button>
                 </div>
             </div>
         </div>

@@ -110,12 +110,62 @@ const itemsCobroData = [
 ];
 
 function inicializarItemsCobro() {
-    const datalist = document.getElementById('items-cobro-list');
-    if (!datalist) return;
-    datalist.innerHTML = '';
-    itemsCobroData.forEach(item => {
-        const option = document.createElement('option');
-        option.value = item.nombre;
-        datalist.appendChild(option);
+    const searchInput = document.getElementById('search-item-cobro');
+    const resultsList = document.getElementById('results-item-cobro');
+    const hiddenInput = document.getElementById('selected-item-cobro');
+    
+    if (!searchInput || !resultsList) return;
+
+    // Función para renderizar lista
+    const renderResults = (matches) => {
+        resultsList.innerHTML = '';
+        if (matches.length > 0) {
+            matches.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item.nombre; 
+                li.className = 'search-item';
+                li.onclick = () => seleccionarItem(item);
+                resultsList.appendChild(li);
+            });
+            resultsList.classList.add('active');
+        } else {
+            resultsList.classList.remove('active');
+        }
+    };
+
+    // Evento Input
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        
+        // CORRECCION: Si está vacío, mostrar TODO
+        if (query.length === 0) {
+            renderResults(itemsCobroData);
+            return;
+        }
+        
+        const matches = itemsCobroData.filter(item => 
+            item.nombre.toLowerCase().includes(query)
+        );
+        renderResults(matches);
+    });
+
+    // Evento Focus
+    searchInput.addEventListener('focus', function() {
+        // Disparar input siempre para mostrar lista completa si está vacío
+        this.dispatchEvent(new Event('input'));
+    });
+
+    // Seleccionar Item
+    const seleccionarItem = (item) => {
+        searchInput.value = item.nombre;
+        hiddenInput.value = item.nombre;
+        resultsList.classList.remove('active');
+    };
+
+    // Cerrar al hacer click fuera
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !resultsList.contains(e.target)) {
+            resultsList.classList.remove('active');
+        }
     });
 }
