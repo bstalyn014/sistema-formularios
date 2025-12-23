@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     inicializarFormularioVerificacion();
+    cargarPersonal('supervisor-verificacion', 'obrero-verificacion');
 });
 
 function inicializarFormularioVerificacion() {

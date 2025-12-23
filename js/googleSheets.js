@@ -3,7 +3,7 @@
 // =============================================
 
 // REEMPLAZA ESTA URL CON LA DE TU SCRIPT DESPLEGADO
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxSzbjyj7Du-GjU_kLJtnAeo31gGZjQIr_Mg6k1eJ-05ibZe273UqOeR2L5rp_qffwb/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4VYdh-h4J-vXD7qVLlTOnic7WezgbkeHOHZtvxGJHb1AKgyiZF3uzHvOZgWbIg1pu/exec';
 
 
 // =============================================
@@ -13,6 +13,11 @@ const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxSzbjyj7Du-G
 
 async function enviarAGSheets(tipo, datos) {
   try {
+    // Compatibilidad: Reconstruir campo 'cuadrilla' si existen supervisor y obrero
+    if (datos.supervisor && datos.obrero) {
+        datos.cuadrilla = `${datos.supervisor} / ${datos.obrero}`;
+    }
+
     // Agregar tipo a los datos
     datos.tipo = tipo;
     

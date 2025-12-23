@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     inicializarFormularioCorte();
+    cargarPersonal('supervisor-corte', 'obrero-corte');
 });
 
 function inicializarFormularioCorte() {

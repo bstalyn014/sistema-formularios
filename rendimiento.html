@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendimiento Diario</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="app-icon.png">
+    <link rel="icon" type="image/png" href="app-icon.png">
+    <meta name="theme-color" content="#f8fafc">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .chart-container {
+            margin-top: 20px;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-sec);
+        }
+        .cuadrilla-bar {
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+        .cuadrilla-bar:hover {
+            transform: translateX(5px);
+            border-color: var(--tech-cyan);
+        }
+        .bar-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .cuadrilla-name {
+            color: var(--text-primary);
+        }
+        .cuadrilla-total {
+            color: var(--tech-blue);
+            font-family: 'Orbitron', sans-serif;
+        }
+        .progress-bg {
+            height: 12px;
+            background: #f1f5f9;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--tech-cyan), var(--tech-blue));
+            border-radius: 6px;
+            width: 0%;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            background: #f8fafc;
+            border-radius: var(--radius-lg);
+            border: 1px dashed #cbd5e1;
+        }
+        .refresh-btn {
+            background: var(--tech-violet);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+            transition: all 0.3s;
+        }
+        .refresh-btn:hover {
+            transform: rotate(180deg);
+        }
+        .header-with-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="formulario active">
+            <header>
+                <div class="header-with-action">
+                    <h1>Rendimiento Diario</h1>
+                    <button id="btn-refresh" class="refresh-btn" title="Actualizar datos">↻</button>
+                </div>
+                <p>Producción estimada del día (Reconexiones)</p>
+                <a href="index.html" class="btn-volver">← Volver al Menú Principal</a>
+            </header>
+            
+            <div id="dashboard-content" class="chart-container">
+                <div class="loading">
+                    <p>Cargando datos del servidor...</p>
+                </div>
+            </div>
+            
+            <div class="info-message" style="margin-top: 30px;">
+                <strong>Nota:</strong> Estos valores son calculados según los ítems de cobro registrados hoy.
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/googleSheets.js"></script> <!-- Para la URL base -->
+    <script src="js/rendimiento.js"></script>
+</body>
+</html>

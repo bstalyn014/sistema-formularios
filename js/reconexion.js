@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     inicializarFormularioReconexion();
     inicializarItemsCobro();
+    cargarPersonal('supervisor-reconexion', 'obrero-reconexion');
 });
 
 function inicializarFormularioReconexion() {

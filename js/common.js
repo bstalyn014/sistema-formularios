@@ -2,7 +2,65 @@
 // FUNCIONES DE UTILIDAD (COMPARTIDAS)
 // =============================================
 
+const PERSONAL = [
+    "ARIAS SOLORZANO MICHAEL ANDRES",
+    "BARREZUETA CARBO ALLAN PETER",
+    "BRAVO VARGAS JOSE ALEJANDRO",
+    "CABRERA SILVA JOSE ALBERTO",
+    "COFRE VALVERDE CARLOS ANDRES",
+    "CARRANZA BRAVO PETER JAHIR",
+    "ESPINOZA SANCHEZ JOSUE AUGUSTO",
+    "GUERRERO FERNANDEZ RODOLFO ANDRES",
+    "GUZHÑAY LUIS",
+    "LANDIN QUIÑONEZ CAMILO FERNANDO",
+    "MARCILLO ALVARADO GILSON ALBERTO",
+    "MARTINEZ VALVERDE CHRISTIAN",
+    "MONTENEGRO TORRES KEVIN MARTIN",
+    "MORAN TOMALA MOISES ALBERTO",
+    "MOTA GARCIA LUIS ALBERTO",
+    "ORDOÑEZ LUCANO EDISON ALEX",
+    "PAUCAR LOPEZ JAVIER ENRIQUE",
+    "PEREZ RODRIGUEZ MARIO ANTHONY",
+    "RODRIGUEZ VERA ELIAS JOSÉ",
+    "TIGUA PLUAS RICHARD ALEX",
+    "YAGUAL GONZALEZ ERICK JOSUE",
+    "ZHUNIO CHELE KEVIN JAVIER",
+    "ZUÑIGA CAJAPE ANGELLO ISRAEL"
+];
+
+function cargarPersonal(supervisorId, obreroId) {
+    const supervisorSelect = document.getElementById(supervisorId);
+    const obreroSelect = document.getElementById(obreroId);
+
+    if (!supervisorSelect || !obreroSelect) return;
+
+    // Limpiar opciones existentes (manteniendo la opción por defecto)
+    supervisorSelect.innerHTML = '<option value="">Seleccione un supervisor</option>';
+    obreroSelect.innerHTML = '<option value="">Seleccione un obrero</option>';
+
+    PERSONAL.sort().forEach(nombre => {
+        const optionS = document.createElement('option');
+        optionS.value = nombre;
+        optionS.textContent = nombre;
+        supervisorSelect.appendChild(optionS);
+
+        const optionO = document.createElement('option');
+        optionO.value = nombre;
+        optionO.textContent = nombre;
+        obreroSelect.appendChild(optionO);
+    });
+}
+
 function obtenerDatosCuadrilla(formData) {
+    // Intenta obtener datos de campos individuales primero
+    const supervisor = formData.get('supervisor');
+    const obrero = formData.get('obrero');
+
+    if (supervisor && obrero) {
+        return { supervisor, obrero };
+    }
+
+    // Fallback para soporte legacy o si falla algo
     const cuadrillaCompleta = formData.get('cuadrilla');
     if (!cuadrillaCompleta || cuadrillaCompleta === "Seleccione una cuadrilla") {
         return { supervisor: '', obrero: '' };
