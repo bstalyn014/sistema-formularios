@@ -21,20 +21,14 @@
             </header>
             
             <form id="inspeccionFormReconexion">
-                <div class="form-section">
-                    <h2>Item de Cobro</h2>
-                    <div class="form-group">
-                        <label for="search-item-cobro">Seleccione o busque un ítem de cobro:</label>
-                        <div class="custom-search-container">
-                            <input type="text" id="search-item-cobro" placeholder="Escriba para buscar..." autocomplete="off">
-                            <input type="hidden" id="selected-item-cobro" name="item_cobro">
-                            <ul id="results-item-cobro" class="search-results"></ul>
-                        </div>
-                    </div>
-                </div>
+
                 
                 <div class="form-section">
                     <h2>Información de la Cuadrilla y Contrato</h2>
+                    <div class="form-group">
+                        <label for="contrato-reconexion" class="required">Contrato</label>
+                        <input type="number" id="contrato-reconexion" name="contrato" required placeholder="Ingrese el número de contrato">
+                    </div>
                     <div class="form-group">
                         <label for="supervisor-reconexion" class="required">Supervisor</label>
                         <select id="supervisor-reconexion" name="supervisor" required>
@@ -51,10 +45,7 @@
                     
                     <div id="reconexion-cuadrilla-display" class="cuadrilla-display"></div>
                     
-                    <div class="form-group">
-                        <label for="contrato-reconexion" class="required">Contrato</label>
-                        <input type="number" id="contrato-reconexion" name="contrato" required placeholder="Ingrese el número de contrato">
-                    </div>
+
                 </div>
 
                 <div class="form-section">
@@ -197,6 +188,18 @@
                                 <label><input type="radio" name="perno_razon" value="tapa dañada"> Tapa dañada</label>
                                 <label><input type="radio" name="perno_razon" value="No se puede ajustar perno"> No se puede ajustar perno</label>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Item de Cobro</h2>
+                    <div class="form-group">
+                        <label for="search-item-cobro">Seleccione o busque un ítem de cobro:</label>
+                        <div class="custom-search-container">
+                            <input type="text" id="search-item-cobro" placeholder="Escriba para buscar..." autocomplete="off">
+                            <input type="hidden" id="selected-item-cobro" name="item_cobro">
+                            <ul id="results-item-cobro" class="search-results"></ul>
                         </div>
                     </div>
                 </div>

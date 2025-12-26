@@ -67,8 +67,9 @@ function generarResumenReconexion() {
     resumen += `, Predio ${formData.get('predio')}, Color ${formData.get('color')}, Perno ${formData.get('perno')}`;
     if (formData.get('perno') === 'No se coloca') resumen += ` (${formData.get('perno_razon')})`;
     
-    const itemCobro = formData.get('item_cobro');
-    if (itemCobro && itemCobro.trim() !== '') resumen += `, Item de cobro: ${itemCobro}`;
+    // Item de cobro eliminado del resumen por solicitud
+    // const itemCobro = formData.get('item_cobro');
+    // if (itemCobro && itemCobro.trim() !== '') resumen += `, Item de cobro: ${itemCobro}`;
     
     const observacion = formData.get('observacion');
     if (observacion && observacion.trim() !== '') resumen += `, Observación: ${observacion}`;
