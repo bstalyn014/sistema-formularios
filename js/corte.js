@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     inicializarFormularioCorte();
     cargarPersonal('supervisor-corte', 'obrero-corte');
+    setupCuadrillaDisplay('supervisor-corte', 'obrero-corte', 'corte-cuadrilla-display');
 });
 
 function inicializarFormularioCorte() {

@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     inicializarFormularioVerificacion();
     cargarPersonal('supervisor-verificacion', 'obrero-verificacion');
+    setupCuadrillaDisplay('supervisor-verificacion', 'obrero-verificacion', 'verificacion-cuadrilla-display');
 });
 
 function inicializarFormularioVerificacion() {

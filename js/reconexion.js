@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     inicializarFormularioReconexion();
     inicializarItemsCobro();
     cargarPersonal('supervisor-reconexion', 'obrero-reconexion');
+    setupCuadrillaDisplay('supervisor-reconexion', 'obrero-reconexion', 'reconexion-cuadrilla-display');
 });
 
 function inicializarFormularioReconexion() {

@@ -616,3 +616,27 @@ input[list] {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+
+/* ============================================= */
+/* CUADRILLA DISPLAY */
+/* ============================================= */
+
+.cuadrilla-display {
+    margin-top: 15px;
+    padding: 12px;
+    background-color: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: var(--radius-sm);
+    color: #0369a1;
+    font-weight: 600;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 0.5px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.1);
+}
+
+.cuadrilla-display.active {
+    display: block;
+}

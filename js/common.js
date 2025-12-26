@@ -131,6 +131,29 @@ function copiarResumen(tipo, boton) {
     }).catch(err => alert('Error al copiar: ' + err));
 }
 
+function setupCuadrillaDisplay(supervisorId, obreroId, displayId) {
+    const supervisorSelect = document.getElementById(supervisorId);
+    const obreroSelect = document.getElementById(obreroId);
+    const displayElement = document.getElementById(displayId);
+
+    if (!supervisorSelect || !obreroSelect || !displayElement) return;
+
+    function updateDisplay() {
+        const supervisor = supervisorSelect.value;
+        const obrero = obreroSelect.value;
+
+        if (supervisor && obrero) {
+            displayElement.textContent = `Cuadrilla: ${supervisor} / ${obrero}`;
+            displayElement.classList.add('active');
+        } else {
+            displayElement.classList.remove('active');
+        }
+    }
+
+    supervisorSelect.addEventListener('change', updateDisplay);
+    obreroSelect.addEventListener('change', updateDisplay);
+}
+
 function volverAlFormulario(tipo) {
     const resumen = document.getElementById(`resumen-${tipo}`);
     const formularioContainer = document.querySelector('.formulario.active') || document.querySelector('.formulario');
