@@ -211,13 +211,40 @@
                 <button id="copiar-resumen-corte" class="btn-copiar">📋 Copiar Resumen</button>
                 <div class="resumen-content" id="resumen-contenido-corte"></div>
                 
-                <div class="buttons" style="margin-top: 20px;">
-                    <a href="index.html" class="btn-volver">Volver al Menú Principal</a>
-                    <button type="button" style="background-color: #0e4f88; margin-left: 10px;" onclick="volverAlFormulario('corte')">Realizar Otro Corte</button>
+        <div id="opcion-generar-reconexion" style="margin-top: 30px; border-top: 2px dashed #ccc; padding-top: 20px;">
+                <h3>Generar Resumen de Reconexión</h3>
+                <p>Si desea generar también el reporte de reconexión con estos datos, seleccione un ítem de cobro:</p>
+                
+                <div class="form-group">
+                    <label for="search-item-cobro-corte">Seleccione o busque un ítem de cobro:</label>
+                    <div class="custom-search-container">
+                        <input type="text" id="search-item-cobro-corte" placeholder="Escriba para buscar..." autocomplete="off">
+                        <input type="hidden" id="selected-item-cobro-corte" name="item_cobro">
+                        <ul id="results-item-cobro-corte" class="search-results"></ul>
+                    </div>
                 </div>
+                
+                <button type="button" class="btn-submit" onclick="generarResumenReconexionDesdeCorte()" style="background-color: #27ae60;">Generar Resumen de Reconexión</button>
+            </div>
+
+            <div id="resumen-reconexion-extra" class="resumen" style="display:none; margin-top: 20px; background-color: #e8f6f3; border-left: 5px solid #27ae60;">
+                <h2>Resumen de Reconexión Adicional</h2>
+                <p class="field-note">Generado automáticamente a partir de los datos de corte.</p>
+                <button id="copiar-resumen-reconexion-extra" class="btn-copiar">📋 Copiar Resumen</button>
+                <div class="resumen-content" id="resumen-contenido-reconexion-extra"></div>
+                
+                <div class="buttons" style="margin-top: 15px;">
+                    <button type="button" class="btn-guardar" onclick="guardarReconexionDesdeCorte()">💾 Guardar en Google Sheets</button>
+                </div>
+            </div>
+            
+            <div class="buttons" style="margin-top: 20px;">
+                <a href="index.html" class="btn-volver">Volver al Menú Principal</a>
+                <button type="button" style="background-color: #0e4f88; margin-left: 10px;" onclick="volverAlFormulario('corte')">Realizar Otro Corte</button>
             </div>
         </div>
     </div>
+    <script src="js/googleSheets.js"></script>
     <script src="js/common.js"></script>
     <script src="js/corte.js"></script>
 </body>

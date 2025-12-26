@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     inicializarFormularioCorte();
     cargarPersonal('supervisor-corte', 'obrero-corte');
     setupCuadrillaDisplay('supervisor-corte', 'obrero-corte', 'corte-cuadrilla-display');
+    inicializarBusquedaItemCobro('search-item-cobro-corte', 'results-item-cobro-corte', 'selected-item-cobro-corte');
 });
 
 function inicializarFormularioCorte() {
@@ -63,4 +64,112 @@ function generarResumenCorte() {
     if (formData.get('observacion')) resumen += `, Observación: ${formData.get('observacion')}`;
     
     mostrarResumen('corte', resumen);
+    
+    // Resetear visualmente la sección extra de reconexión
+    const extraReconexion = document.getElementById('resumen-reconexion-extra');
+    if (extraReconexion) extraReconexion.style.display = 'none';
+}
+
+function generarResumenReconexionDesdeCorte() {
+    // Obtener datos del formulario de CORTE existente
+    const form = document.getElementById('inspeccionForm');
+    const formData = new FormData(form);
+    
+    // Obtener item de cobro seleccionado en la SECCIÓN EXTRA
+    const itemCobroInput = document.getElementById('selected-item-cobro-corte');
+    const itemCobro = itemCobroInput ? itemCobroInput.value : '';
+    
+    // MAPPING DE LÓGICA (Corte -> Reconexión)
+    // Se realiza corte -> Reconexión
+    const corteValor = formData.get('corte');
+    let reconexionValor = '';
+    
+    if (corteValor === 'Con ficha') {
+        reconexionValor = 'Se retira ficha';
+    } else if (corteValor === 'Con ficha y llave trabada') {
+        reconexionValor = 'Se retira ficha y se destraba llave';
+    } else if (corteValor === 'Solo llave trabada') {
+        reconexionValor = 'Se destraba llave';
+    } else {
+        // Fallback o mismo valor
+        reconexionValor = corteValor; 
+    }
+    
+    const { supervisor, obrero } = obtenerDatosCuadrilla(formData);
+
+    // CONSTRUIR RESUMEN DE RECONEXIÓN
+    let resumen = `Contrato: ${formData.get('contrato')}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se encontró el Servicio App ${formData.get('servicio')}, Medidor ${formData.get('medidor')}`;
+    
+    if (formData.get('medidor') === 'Mal estado') resumen += ` (${formData.get('medidor_razon')})`;
+    
+    resumen += `, Lectura ${formData.get('lectura')} M3, Litros ${formData.get('litros')}, Cajetin ${formData.get('cajetin')}`;
+    if (formData.get('cajetin') === 'Mal estado') resumen += ` (${formData.get('cajetin_tipo_dano')})`;
+    
+    resumen += `, Tipo de llave de corte ${formData.get('tipo_llave')}, Llave de corte ${formData.get('llave_corte')}`;
+    if (formData.get('llave_corte') === 'Mal estado') resumen += ` (${formData.get('llave_corte_razon')})`;
+    
+    resumen += `, Llave de paso ${formData.get('llave_paso')}`;
+    if (formData.get('llave_paso') === 'Mal estado') resumen += ` (${formData.get('llave_paso_razon')})`;
+    
+    resumen += `, Medio nudo ${formData.get('medio_nudo')}`;
+    if (formData.get('medio_nudo') === 'No') resumen += ` (${formData.get('medio_nudo_accesorio')})`;
+    
+    // Usar el valor mapeado
+    resumen += `, se procede a realizar la reconexión del servicio ${reconexionValor}`;
+    
+    resumen += `, Predio ${formData.get('predio')}, Color ${formData.get('color')}, Perno ${formData.get('perno')}`;
+    if (formData.get('perno') === 'No se coloca') resumen += ` (${formData.get('perno_razon')})`;
+    
+    // Item de cobro (este sí se muestra aquí, no se especificó quitarlo de este resumen extra, 
+    // pero si se quitó del principal... asumo que SIEMPRE se quita del resumen de texto final para reconexión según la solicitud previa
+    // "eliminemos del resumen de reconexionla parte del item de cobro".
+    // Así que lo mantendré comentado para ser consistente, aunque el usuario pidió seleccionarlo para GUARDARLO en Sheets).
+    
+    // if (itemCobro && itemCobro.trim() !== '') resumen += `, Item de cobro: ${itemCobro}`;
+    
+    const observacion = formData.get('observacion');
+    if (observacion && observacion.trim() !== '') resumen += `, Observación: ${observacion}`;
+
+    // Mostrar en el contenedor extra
+    const contenidoElement = document.getElementById('resumen-contenido-reconexion-extra');
+    const contenedorElement = document.getElementById('resumen-reconexion-extra');
+    
+    if (contenidoElement && contenedorElement) {
+        contenidoElement.textContent = resumen;
+        contenedorElement.style.display = 'block';
+        contenedorElement.classList.add('active');
+        contenedorElement.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+async function guardarReconexionDesdeCorte() {
+    const form = document.getElementById('inspeccionForm');
+    const formData = new FormData(form);
+    
+    // Obtener item de cobro
+    const itemCobroInput = document.getElementById('selected-item-cobro-corte');
+    const itemCobro = itemCobroInput ? itemCobroInput.value : '';
+    
+    // Mapeo inverso para guardar los datos correctos en el sheet
+    const corteValor = formData.get('corte');
+    let reconexionValor = '';
+    if (corteValor === 'Con ficha') reconexionValor = 'Se retira ficha';
+    else if (corteValor === 'Con ficha y llave trabada') reconexionValor = 'Se retira ficha y se destraba llave';
+    else if (corteValor === 'Solo llave trabada') reconexionValor = 'Se destraba llave';
+    else reconexionValor = corteValor;
+
+    // Construir objeto de datos
+    const datos = {};
+    formData.forEach((value, key) => {
+        // Excluir campos específicos de corte que no aplican o se transforman
+        if (key !== 'corte') {
+            datos[key] = value;
+        }
+    });
+    
+    // Agregar campos transformados/nuevos
+    datos['reconexion'] = reconexionValor;
+    datos['item_cobro'] = itemCobro;
+    
+    await enviarAGSheets('reconexion', datos);
 }

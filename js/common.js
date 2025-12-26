@@ -182,6 +182,92 @@ function volverAlFormulario(tipo) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// =============================================
+// DATOS Y LÓGICA DE ITEMS DE COBRO
+// =============================================
+
+const ITEMS_COBRO_DATA = [
+    { nombre: "Corte del servicio", precio: 0 },
+    { nombre: "Reduccion de caudal", precio: 1.63 },
+    { nombre: "Verificación de corte recuperación de cartera", precio: 0 },
+    { nombre: "Reconexion de servicio (sencillas)", precio: 3.88 },
+    { nombre: "Reconexion efectiva 1-5 meses", precio: 4.14 },
+    { nombre: "Reconexion efectiva 6-10 meses", precio: 8.17 },
+    { nombre: "Reconexion efectiva 11-15 meses", precio: 13.65 },
+    { nombre: "Reconexion efectiva 16-24 meses", precio: 20.17 },
+    { nombre: "Reconexion efectiva 25-40 meses", precio: 29.66 },
+    { nombre: "Reconexion efectiva 41-50 meses", precio: 47.27 },
+    { nombre: "Reconexion efectiva 51-60 meses", precio: 64.90 },
+    { nombre: "Reconexion efectiva 61-80 meses", precio: 96.73 },
+    { nombre: "Reconexion efectiva >= 81 meses", precio: 128.56 },
+    { nombre: "Reubicación por corte y reconexion", precio: 19.33 },
+    { nombre: "Mantenimiento corte y reconexión", precio: 3.33 },
+    { nombre: "Reactivacion del caudal", precio: 1.65 },
+    { nombre: "Verificación de corte integral", precio: 33.51 },
+    { nombre: "Cierre definitivo en sitio por depuracion", precio: 33.19 }
+];
+
+function inicializarBusquedaItemCobro(inputId, resultsListId, hiddenInputId) {
+    const searchInput = document.getElementById(inputId);
+    const resultsList = document.getElementById(resultsListId);
+    const hiddenInput = document.getElementById(hiddenInputId);
+    
+    if (!searchInput || !resultsList) return;
+
+    // Función para renderizar lista
+    const renderResults = (matches) => {
+        resultsList.innerHTML = '';
+        if (matches.length > 0) {
+            matches.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item.nombre; 
+                li.className = 'search-item';
+                li.onclick = () => seleccionarItem(item);
+                resultsList.appendChild(li);
+            });
+            resultsList.classList.add('active');
+        } else {
+            resultsList.classList.remove('active');
+        }
+    };
+
+    // Evento Input
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        
+        // Si está vacío, mostrar TODO
+        if (query.length === 0) {
+            renderResults(ITEMS_COBRO_DATA);
+            return;
+        }
+        
+        const matches = ITEMS_COBRO_DATA.filter(item => 
+            item.nombre.toLowerCase().includes(query)
+        );
+        renderResults(matches);
+    });
+
+    // Evento Focus
+    searchInput.addEventListener('focus', function() {
+        // Disparar input siempre para mostrar lista completa si está vacío
+        this.dispatchEvent(new Event('input'));
+    });
+
+    // Seleccionar Item
+    const seleccionarItem = (item) => {
+        searchInput.value = item.nombre;
+        if (hiddenInput) hiddenInput.value = item.nombre;
+        resultsList.classList.remove('active');
+    };
+
+    // Cerrar al hacer click fuera
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !resultsList.contains(e.target)) {
+            resultsList.classList.remove('active');
+        }
+    });
+}
+
 // Inicialización común
 document.addEventListener('DOMContentLoaded', function() {
     inicializarBotonesCopiar();
