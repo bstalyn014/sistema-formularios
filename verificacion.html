@@ -99,22 +99,23 @@
                     </div>
                     
                     <div class="form-group">
-                        <label class="required">Tipo de llave de corte</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="tipo_llave" value="PVC" required> PVC</label>
-                            <label><input type="radio" name="tipo_llave" value="PEAD" required> PEAD</label>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
                         <label class="required">Llave de corte</label>
                         <div class="radio-group">
                             <label><input type="radio" name="llave_corte" value="Buen estado" required> Buen estado</label>
                             <label><input type="radio" name="llave_corte" value="Mal estado" required> Mal estado</label>
+                            <label><input type="radio" name="llave_corte" value="No tiene" required> No tiene</label>
                         </div>
                         <div id="llave-corte-razon-verificacion" class="conditional-field">
                             <label for="llave-corte-razon-text-verificacion">¿Por qué?</label>
                             <input type="text" id="llave-corte-razon-text-verificacion" name="llave_corte_razon" placeholder="Explique el motivo del mal estado">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Tipo de llave de corte</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="tipo_llave" value="PVC"> PVC</label>
+                            <label><input type="radio" name="tipo_llave" value="PEAD"> PEAD</label>
                         </div>
                     </div>
                     

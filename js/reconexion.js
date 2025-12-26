@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     inicializarItemsCobro();
     cargarPersonal('supervisor-reconexion', 'obrero-reconexion');
     setupCuadrillaDisplay('supervisor-reconexion', 'obrero-reconexion', 'reconexion-cuadrilla-display');
+    setupLlaveCorteLogica('#formulario-reconexion');
 });
 
 function inicializarFormularioReconexion() {
@@ -32,6 +33,17 @@ function configurarListenersCondicionales(contexto, configs) {
 
 function generarResumenReconexion() {
     const form = document.getElementById('inspeccionFormReconexion');
+    
+    // Validación manual personalizada para saltar "tipo_llave" si está deshabilitado
+    const tipoLlaveRadios = form.querySelectorAll('input[name="tipo_llave"]');
+    let tipoLlaveRequerido = true;
+    if (tipoLlaveRadios.length > 0 && tipoLlaveRadios[0].disabled) {
+        tipoLlaveRequerido = false;
+        tipoLlaveRadios.forEach(r => r.required = false);
+    } else {
+        tipoLlaveRadios.forEach(r => r.required = true);
+    }
+
     if (!form.checkValidity()) {
         alert('Por favor, complete todos los campos requeridos');
         form.reportValidity();
@@ -48,8 +60,14 @@ function generarResumenReconexion() {
     resumen += `, Lectura ${formData.get('lectura')} M3, Litros ${formData.get('litros')}, Cajetin ${formData.get('cajetin')}`;
     if (formData.get('cajetin') === 'Mal estado') resumen += ` (${formData.get('cajetin_tipo_dano')})`;
     
-    resumen += `, Tipo de llave de corte ${formData.get('tipo_llave')}, Llave de corte ${formData.get('llave_corte')}`;
-    if (formData.get('llave_corte') === 'Mal estado') resumen += ` (${formData.get('llave_corte_razon')})`;
+    // Lógica para Tipo de Llave y Llave de Corte
+    const llaveCorteEstado = formData.get('llave_corte');
+    if (llaveCorteEstado === 'No tiene') {
+        resumen += `, Llave de corte No tiene`;
+    } else {
+        resumen += `, Tipo de llave de corte ${formData.get('tipo_llave')}, Llave de corte ${llaveCorteEstado}`;
+        if (llaveCorteEstado === 'Mal estado') resumen += ` (${formData.get('llave_corte_razon')})`;
+    }
     
     resumen += `, Llave de paso ${formData.get('llave_paso')}`;
     if (formData.get('llave_paso') === 'Mal estado') resumen += ` (${formData.get('llave_paso_razon')})`;

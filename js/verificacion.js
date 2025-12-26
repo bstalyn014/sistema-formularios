@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     inicializarFormularioVerificacion();
     cargarPersonal('supervisor-verificacion', 'obrero-verificacion');
     setupCuadrillaDisplay('supervisor-verificacion', 'obrero-verificacion', 'verificacion-cuadrilla-display');
+    setupLlaveCorteLogica('#formulario-verificacion');
 });
 
 function inicializarFormularioVerificacion() {
@@ -13,6 +14,8 @@ function inicializarFormularioVerificacion() {
         { name: 'medio_nudo', id: 'medio-nudo-accesorio-verificacion', condition: val => val === 'No' },
         { name: 'perno', id: 'perno-razon-verificacion', condition: val => val === 'No se coloca' }
     ]);
+    
+// ... (resto de inicializarFormularioVerificacion y configurarListenersCondicionales se mantiene igual)
 
     // Lógica específica de verificación
     const verificacionRadios = document.querySelectorAll('#formulario-verificacion input[name="verificacion"]');
@@ -73,6 +76,17 @@ function configurarListenersCondicionales(contexto, configs) {
 
 function generarResumenVerificacion() {
     const form = document.getElementById('inspeccionFormVerificacion');
+    
+    // Validación manual personalizada para saltar "tipo_llave" si está deshabilitado
+    const tipoLlaveRadios = form.querySelectorAll('input[name="tipo_llave"]');
+    let tipoLlaveRequerido = true;
+    if (tipoLlaveRadios.length > 0 && tipoLlaveRadios[0].disabled) {
+        tipoLlaveRequerido = false;
+        tipoLlaveRadios.forEach(r => r.required = false);
+    } else {
+        tipoLlaveRadios.forEach(r => r.required = true);
+    }
+    
     if (!form.checkValidity()) {
         alert('Por favor, complete todos los campos requeridos');
         form.reportValidity();
@@ -89,8 +103,14 @@ function generarResumenVerificacion() {
     resumen += `, Lectura ${formData.get('lectura')} M3, Litros ${formData.get('litros')}, Cajetin ${formData.get('cajetin')}`;
     if (formData.get('cajetin') === 'Mal estado') resumen += ` (${formData.get('cajetin_tipo_dano')})`;
     
-    resumen += `, Tipo de llave de corte ${formData.get('tipo_llave')}, Llave de corte ${formData.get('llave_corte')}`;
-    if (formData.get('llave_corte') === 'Mal estado') resumen += ` (${formData.get('llave_corte_razon')})`;
+    // Lógica para Tipo de Llave y Llave de Corte
+    const llaveCorteEstado = formData.get('llave_corte');
+    if (llaveCorteEstado === 'No tiene') {
+        resumen += `, Llave de corte No tiene`;
+    } else {
+        resumen += `, Tipo de llave de corte ${formData.get('tipo_llave')}, Llave de corte ${llaveCorteEstado}`;
+        if (llaveCorteEstado === 'Mal estado') resumen += ` (${formData.get('llave_corte_razon')})`;
+    }
     
     resumen += `, Llave de paso ${formData.get('llave_paso')}`;
     if (formData.get('llave_paso') === 'Mal estado') resumen += ` (${formData.get('llave_paso_razon')})`;

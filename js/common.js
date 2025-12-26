@@ -268,6 +268,43 @@ function inicializarBusquedaItemCobro(inputId, resultsListId, hiddenInputId) {
     });
 }
 
+// =============================================
+// LÓGICA COMÚN PARA LLAVES
+// =============================================
+function setupLlaveCorteLogica(contexto) {
+    const llaveCorteRadios = document.querySelectorAll(`${contexto} input[name="llave_corte"]`);
+    const tipoLlaveRadios = document.querySelectorAll(`${contexto} input[name="tipo_llave"]`);
+    
+    // Función para manejar el estado
+    const actualizarEstadoTipoLlave = (valor) => {
+        const esNoTiene = valor === 'No tiene';
+        
+        tipoLlaveRadios.forEach(radio => {
+            radio.disabled = esNoTiene;
+            if (esNoTiene) {
+                radio.checked = false;
+                // Opcional: Agregar clase visual para indicar deshabilitado
+                radio.parentElement.style.opacity = '0.5';
+                radio.parentElement.style.cursor = 'not-allowed';
+            } else {
+                radio.parentElement.style.opacity = '1';
+                radio.parentElement.style.cursor = 'pointer';
+            }
+        });
+    };
+
+    // Listener para cambios
+    llaveCorteRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            actualizarEstadoTipoLlave(this.value);
+            
+            // Lógica existente para "Mal estado" (condicional de razón)
+            // Se asume que esa lógica ya está cubierta por configurarListenersCondicionales
+            // Aquí solo manejamos el bloqueo de "Tipo de llave"
+        });
+    });
+}
+
 // Inicialización común
 document.addEventListener('DOMContentLoaded', function() {
     inicializarBotonesCopiar();
