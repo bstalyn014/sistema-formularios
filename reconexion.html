@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reconexión del Servicio</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="app-icon.png">
+    <link rel="icon" type="image/png" href="app-icon.png">
+    <meta name="theme-color" content="#f8fafc">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="formulario-reconexion" class="formulario active">
+            <header>
+                <h1>Formulario de Reconexión del Servicio</h1>
+                <p>Complete todos los campos requeridos para generar el reporte de reconexión</p>
+                <a href="index.html" class="btn-volver">← Volver al Menú Principal</a>
+            </header>
+            
+            <form id="inspeccionFormReconexion">
+
+                
+                <div class="form-section">
+                    <h2>Información de la Cuadrilla y Contrato</h2>
+                    <div class="form-group">
+                        <label for="contrato-reconexion" class="required">Contrato</label>
+                        <input type="number" id="contrato-reconexion" name="contrato" required placeholder="Ingrese el número de contrato">
+                    </div>
+                    <div class="form-group">
+                        <label for="supervisor-reconexion" class="required">Supervisor</label>
+                        <select id="supervisor-reconexion" name="supervisor" required>
+                            <option value="">Seleccione un supervisor</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="obrero-reconexion" class="required">Obrero</label>
+                        <select id="obrero-reconexion" name="obrero" required>
+                            <option value="">Seleccione un obrero</option>
+                        </select>
+                    </div>
+                    
+                    <div id="reconexion-cuadrilla-display" class="cuadrilla-display"></div>
+                    
+
+                </div>
+
+                <div class="form-section">
+                    <h2>Estado del Servicio y Medidor</h2>
+                    <div class="form-group">
+                        <label class="required">Servicio</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="servicio" value="Activo" required> Activo</label>
+                            <label><input type="radio" name="servicio" value="Suspendido" required> Suspendido</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Medidor</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="medidor" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="medidor" value="Mal estado" required> Mal estado</label>
+                        </div>
+                        <div id="medidor-razon-reconexion" class="conditional-field">
+                            <label for="medidor-razon-text-reconexion">¿Por qué?</label>
+                            <input type="text" id="medidor-razon-text-reconexion" name="medidor_razon" placeholder="Explique el motivo del mal estado">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lectura-reconexion" class="required">Lectura</label>
+                        <input type="number" id="lectura-reconexion" name="lectura" required placeholder="Ingrese la lectura">
+                        <div class="field-note">El valor se mostrará automáticamente con "M3" en el reporte</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="litros-reconexion" class="required">Litros</label>
+                        <input type="number" id="litros-reconexion" name="litros" required placeholder="Ingrese los litros">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Estado de Componentes</h2>
+                    <div class="form-group">
+                        <label class="required">Cajetin</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="cajetin" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="cajetin" value="Mal estado" required> Mal estado</label>
+                        </div>
+                        <div id="cajetin-razon-reconexion" class="conditional-field">
+                            <label class="required">Seleccione el tipo de daño:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="cajetin_tipo_dano" value="tapa dañada sin visor"> Tapa dañada sin visor</label>
+                                <label><input type="radio" name="cajetin_tipo_dano" value="cajetin roto"> Cajetín roto</label>
+                                <label><input type="radio" name="cajetin_tipo_dano" value="sin tapa"> Sin tapa</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Llave de corte</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="llave_corte" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="llave_corte" value="Mal estado" required> Mal estado</label>
+                            <label><input type="radio" name="llave_corte" value="No tiene" required> No tiene</label>
+                        </div>
+                        <div id="llave-corte-razon-reconexion" class="conditional-field">
+                            <label for="llave-corte-razon-text-reconexion">¿Por qué?</label>
+                            <input type="text" id="llave-corte-razon-text-reconexion" name="llave_corte_razon" placeholder="Explique el motivo del mal estado">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Tipo de llave de corte</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="tipo_llave" value="PVC"> PVC</label>
+                            <label><input type="radio" name="tipo_llave" value="PEAD"> PEAD</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Llave de paso</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="llave_paso" value="Buen estado" required> Buen estado</label>
+                            <label><input type="radio" name="llave_paso" value="Mal estado" required> Mal estado</label>
+                            <div id="llave-paso-razon-reconexion" class="conditional-field">
+                                <label for="llave-paso-razon-text-reconexion">¿Por qué?</label>
+                                <input type="text" id="llave-paso-razon-text-reconexion" name="llave_paso_razon" placeholder="Explique el motivo del mal estado">
+                            </div>
+                            <label><input type="radio" name="llave_paso" value="No tiene" required> No tiene</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Detalles Finales de la Inspección</h2>
+                    <div class="form-group">
+                        <label class="required">Medio nudo</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="medio_nudo" value="Si" required> Si</label>
+                            <label><input type="radio" name="medio_nudo" value="No" required> No</label>
+                        </div>
+                        <div id="medio-nudo-accesorio-reconexion" class="conditional-field">
+                            <label for="medio-nudo-accesorio-text-reconexion">¿Qué tipo de accesorio tiene?</label>
+                            <input type="text" id="medio-nudo-accesorio-text-reconexion" name="medio_nudo_accesorio" placeholder="Especifique el tipo de accesorio">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Se realiza la reconexión</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="reconexion" value="se retira ficha" required> Se retira ficha</label>
+                            <label><input type="radio" name="reconexion" value="se destraba llave" required> Se destraba llave</label>
+                            <label><input type="radio" name="reconexion" value="se retira ficha y se destraba llave" required> Se retira ficha y se destraba llave</label>
+                            <label><input type="radio" name="reconexion" value="ya estaba reconectado" required> Ya estaba reconectado</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Predio</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="predio" value="1 planta" required> 1 planta</label>
+                            <label><input type="radio" name="predio" value="2 planta" required> 2 planta</label>
+                            <label><input type="radio" name="predio" value="3 planta" required> 3 planta</label>
+                            <label><input type="radio" name="predio" value="4 planta" required> 4 planta</label>
+                            <label><input type="radio" name="predio" value="condominio" required> condominio</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="color-reconexion" class="required">Color</label>
+                        <input type="text" id="color-reconexion" name="color" required placeholder="Ingrese el color">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Perno</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="perno" value="Se instala" required> Se instala</label>
+                            <label><input type="radio" name="perno" value="Se ajusta" required> Se ajusta</label>
+                            <label><input type="radio" name="perno" value="No se coloca" required> No se coloca</label>
+                        </div>
+                        <div id="perno-razon-reconexion" class="conditional-field">
+                            <label class="required">Seleccione la razón:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="perno_razon" value="no hay en stock"> No hay en stock</label>
+                                <label><input type="radio" name="perno_razon" value="tapa dañada"> Tapa dañada</label>
+                                <label><input type="radio" name="perno_razon" value="No se puede ajustar perno"> No se puede ajustar perno</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Item de Cobro</h2>
+                    <div class="form-group">
+                        <label for="selected-item-cobro">Seleccione un ítem de cobro:</label>
+                        <select id="selected-item-cobro" name="item_cobro">
+                            <option value="">Seleccione un ítem de cobro</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Observación Final</h2>
+                    <div class="form-group">
+                        <textarea id="observacion-reconexion" name="observacion" rows="3" placeholder="Escriba cualquier observación adicional"></textarea>
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <button type="button" class="btn-submit" onclick="generarResumenReconexion()">Generar Reporte de Reconexión</button>
+                    <!-- <button type="button" class="btn-guardar" onclick="guardarReconexionEnSheets()">💾 Guardar en Google Sheets</button> -->
+                </div>
+            </form>
+            
+            <div id="resumen-reconexion" class="resumen">
+                <div class="success-message">
+                    <h2>¡Reporte de Reconexión Generado!</h2>
+                    <p>El siguiente es el resumen de la tarea realizada:</p>
+                </div>
+                
+                <h2>Resumen de la Reconexión</h2>
+                <button id="copiar-resumen-reconexion" class="btn-copiar">📋 Copiar Resumen</button>
+                <div class="resumen-content" id="resumen-contenido-reconexion"></div>
+                
+                <div class="buttons" style="margin-top: 20px;">
+                    <a href="index.html" class="btn-volver">Volver al Menú Principal</a>
+                    <button type="button" style="background-color: #0e4f88; margin-left: 10px;" onclick="volverAlFormulario('reconexion')">Realizar Otro Reconexión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/common.js"></script>
+    <script src="js/reconexion.js"></script>
+    <script src="js/googleSheets.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión Técnica</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="app-icon.png">
+    <link rel="icon" type="image/png" href="app-icon.png">
+    <meta name="theme-color" content="#f8fafc">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Menú Principal -->
+        <div id="menu-principal" class="menu-section active">
+            <header>
+                <h1>Sistema de Gestión Técnica</h1>
+                <p>Seleccione el tipo de tarea a realizar</p>
+            </header>
+            
+            <div class="menu-options">
+                <a href="corte.html" class="menu-card-link">
+                    <div class="menu-card">
+                        <div class="menu-icon">⚡</div>
+                        <h3>Corte del Servicio</h3>
+                        <p>Realizar corte de servicio técnico</p>
+                    </div>
+                </a>
+                
+                <a href="reconexion.html" class="menu-card-link">
+                    <div class="menu-card">
+                        <div class="menu-icon">🔌</div>
+                        <h3>Reconexión del Servicio</h3>
+                        <p>Restablecer servicio previamente cortado</p>
+                    </div>
+                </a>
+                
+                <a href="verificacion.html" class="menu-card-link">
+                    <div class="menu-card">
+                        <div class="menu-icon">🔍</div>
+                        <h3>Verificación de Corte</h3>
+                        <p>Verificar estado de servicio cortado</p>
+                    </div>
+                </a>
+                
+                <a href="analisis.html" class="menu-card-link">
+                    <div class="menu-card">
+                        <div class="menu-icon">📊</div>
+                        <h3>Sistema de Análisis de Consumo</h3>
+                        <p>Análisis de consumo residencial y comercial</p>
+                    </div>
+                </a>
+
+                <a href="rendimiento.html" class="menu-card-link">
+                    <div class="menu-card" style="border-color: var(--tech-violet);">
+                        <div class="menu-icon">📈</div>
+                        <h3>Rendimiento Diario</h3>
+                        <p>Ver producción acumulada de cuadrillas</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- No script needed for menu -->
+</body>
+</html>

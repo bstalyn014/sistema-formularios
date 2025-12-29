@@ -1,0 +1,116 @@
+document.addEventListener('DOMContentLoaded', function() {
+    inicializarFormularioReconexion();
+    inicializarItemsCobro();
+    cargarPersonal('supervisor-reconexion', 'obrero-reconexion');
+    setupCuadrillaDisplay('supervisor-reconexion', 'obrero-reconexion', 'reconexion-cuadrilla-display');
+    setupLlaveCorteLogica('#formulario-reconexion');
+});
+
+function inicializarFormularioReconexion() {
+    configurarListenersCondicionales('#formulario-reconexion', [
+        { name: 'medidor', id: 'medidor-razon-reconexion', condition: val => val === 'Mal estado' },
+        { name: 'cajetin', id: 'cajetin-razon-reconexion', condition: val => val === 'Mal estado' },
+        { name: 'llave_corte', id: 'llave-corte-razon-reconexion', condition: val => val === 'Mal estado' },
+        { name: 'llave_paso', id: 'llave-paso-razon-reconexion', condition: val => val === 'Mal estado' },
+        { name: 'medio_nudo', id: 'medio-nudo-accesorio-reconexion', condition: val => val === 'No' },
+        { name: 'perno', id: 'perno-razon-reconexion', condition: val => val === 'No se coloca' }
+    ]);
+}
+
+function configurarListenersCondicionales(contexto, configs) {
+    configs.forEach(config => {
+        const radios = document.querySelectorAll(`${contexto} input[name="${config.name}"]`);
+        radios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const target = document.getElementById(config.id);
+                if (target) {
+                    target.classList.toggle('active', config.condition(this.value));
+                }
+            });
+        });
+    });
+}
+
+function generarResumenReconexion() {
+    const form = document.getElementById('inspeccionFormReconexion');
+    
+    // Validación manual personalizada para saltar "tipo_llave" si está deshabilitado
+    const tipoLlaveRadios = form.querySelectorAll('input[name="tipo_llave"]');
+    let tipoLlaveRequerido = true;
+    if (tipoLlaveRadios.length > 0 && tipoLlaveRadios[0].disabled) {
+        tipoLlaveRequerido = false;
+        tipoLlaveRadios.forEach(r => r.required = false);
+    } else {
+        tipoLlaveRadios.forEach(r => r.required = true);
+    }
+
+    if (!form.checkValidity()) {
+        alert('Por favor, complete todos los campos requeridos');
+        form.reportValidity();
+        return;
+    }
+    
+    const formData = new FormData(form);
+    const { supervisor, obrero } = obtenerDatosCuadrilla(formData);
+
+    let resumen = `Contrato: ${formData.get('contrato')}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se encontró el Servicio App ${formData.get('servicio')}, Medidor ${formData.get('medidor')}`;
+    
+    if (formData.get('medidor') === 'Mal estado') resumen += ` (${formData.get('medidor_razon')})`;
+    
+    resumen += `, Lectura ${formData.get('lectura')} M3, Litros ${formData.get('litros')}, Cajetin ${formData.get('cajetin')}`;
+    if (formData.get('cajetin') === 'Mal estado') resumen += ` (${formData.get('cajetin_tipo_dano')})`;
+    
+    // Lógica para Tipo de Llave y Llave de Corte
+    const llaveCorteEstado = formData.get('llave_corte');
+    if (llaveCorteEstado === 'No tiene') {
+        resumen += `, Llave de corte No tiene`;
+    } else {
+        resumen += `, Tipo de llave de corte ${formData.get('tipo_llave')}, Llave de corte ${llaveCorteEstado}`;
+        if (llaveCorteEstado === 'Mal estado') resumen += ` (${formData.get('llave_corte_razon')})`;
+    }
+    
+    resumen += `, Llave de paso ${formData.get('llave_paso')}`;
+    if (formData.get('llave_paso') === 'Mal estado') resumen += ` (${formData.get('llave_paso_razon')})`;
+    
+    resumen += `, Medio nudo ${formData.get('medio_nudo')}`;
+    if (formData.get('medio_nudo') === 'No') resumen += ` (${formData.get('medio_nudo_accesorio')})`;
+    
+    const tipoReconexion = formData.get('reconexion');
+    if (tipoReconexion === 'ya estaba reconectado') {
+        resumen += `, se encontró el servicio reconectado`;
+    } else {
+        resumen += `, se procede a realizar la reconexión del servicio ${tipoReconexion}`;
+    }
+    
+    resumen += `, Predio ${formData.get('predio')}, Color ${formData.get('color')}, Perno ${formData.get('perno')}`;
+    if (formData.get('perno') === 'No se coloca') resumen += ` (${formData.get('perno_razon')})`;
+    
+    // Item de cobro eliminado del resumen por solicitud
+    // const itemCobro = formData.get('item_cobro');
+    // if (itemCobro && itemCobro.trim() !== '') resumen += `, Item de cobro: ${itemCobro}`;
+    
+    const observacion = formData.get('observacion');
+    if (observacion && observacion.trim() !== '') resumen += `, Observación: ${observacion}`;
+    
+    mostrarResumen('reconexion', resumen);
+
+    // Agregar botón de guardar si no existe
+    if (!document.getElementById('btn-guardar-reconexion')) {
+        const botonCopiar = document.getElementById('copiar-resumen-reconexion');
+        
+        const botonGuardar = document.createElement('button');
+        botonGuardar.type = 'button';
+        botonGuardar.id = 'btn-guardar-reconexion';
+        botonGuardar.className = 'btn-guardar';
+        botonGuardar.innerHTML = '💾 Guardar en Google Sheets';
+        botonGuardar.onclick = () => guardarReconexionEnSheets();
+        
+        botonCopiar.parentNode.insertBefore(botonGuardar, botonCopiar.nextSibling);
+    }
+}
+
+const itemsCobroData = []; // Deprecated, moved to common.js
+
+function inicializarItemsCobro() {
+    cargarItemsCobro('selected-item-cobro');
+}
