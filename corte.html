@@ -212,20 +212,18 @@
                 <button id="copiar-resumen-corte" class="btn-copiar">📋 Copiar Resumen</button>
                 <div class="resumen-content" id="resumen-contenido-corte"></div>
                 
-        <div id="opcion-generar-reconexion" style="margin-top: 30px; border-top: 2px dashed #ccc; padding-top: 20px;">
+        <div id="opcion-generar-reconexion" class="reconexion-option-container">
                 <h3>Generar Resumen de Reconexión</h3>
                 <p>Si desea generar también el reporte de reconexión con estos datos, seleccione un ítem de cobro:</p>
                 
                 <div class="form-group">
-                    <label for="selected-item-cobro-corte">Seleccione un ítem de cobro:</label>
-                    <div class="form-group">
-                        <select id="selected-item-cobro-corte" name="item_cobro">
-                            <option value="">Seleccione un ítem de cobro</option>
-                        </select>
-                    </div>
+                    <label for="selected-item-cobro-corte">Item de cobro:</label>
+                    <select id="selected-item-cobro-corte" name="item_cobro">
+                        <option value="">Seleccione un ítem de cobro</option>
+                    </select>
                 </div>
                 
-                <button type="button" class="btn-submit" onclick="generarResumenReconexionDesdeCorte()" style="background-color: #27ae60;">Generar Resumen de Reconexión</button>
+                <button type="button" class="btn-submit" onclick="generarResumenReconexionDesdeCorte()" style="background-color: #27ae60; border-color: #27ae60; color: white;">Generar Resumen de Reconexión</button>
             </div>
 
             <div id="resumen-reconexion-extra" class="resumen" style="display:none; margin-top: 20px; background-color: #e8f6f3; border-left: 5px solid #27ae60;">

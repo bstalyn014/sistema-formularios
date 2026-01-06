@@ -82,6 +82,10 @@ function generarResumenCorte() {
     
     if (formData.get('observacion')) resumen += `, Observación: ${formData.get('observacion')}`;
     
+    const datosParaGuardar = {};
+    formData.forEach((value, key) => datosParaGuardar[key] = value);
+    guardarCorteLocal(formData.get('contrato'), datosParaGuardar);
+
     mostrarResumen('corte', resumen);
     
     // Resetear visualmente la sección extra de reconexión

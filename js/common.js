@@ -258,6 +258,42 @@ function setupLlaveCorteLogica(contexto) {
     });
 }
 
+// =============================================
+// PERSISTENCIA LOCAL (CORTE -> RECONEXIÓN)
+// =============================================
+function guardarCorteLocal(contrato, datos) {
+    if (!contrato) return;
+    try {
+        const cortesGuardados = JSON.parse(localStorage.getItem('cortesRecientes') || '{}');
+        // Guardar con timestamp para poder limpiar antiguos si se necesitase
+        cortesGuardados[contrato] = {
+            timestamp: new Date().getTime(),
+            datos: datos
+        };
+        localStorage.setItem('cortesRecientes', JSON.stringify(cortesGuardados));
+        console.log(`Datos de corte guardados para contrato: ${contrato}`);
+    } catch (e) {
+        console.error('Error al guardar en localStorage:', e);
+    }
+}
+
+function obtenerCorteLocal(contrato) {
+    if (!contrato) return null;
+    try {
+        const cortesGuardados = JSON.parse(localStorage.getItem('cortesRecientes') || '{}');
+        const registro = cortesGuardados[contrato];
+        
+        if (registro) {
+            // Opcional: Validar antigüedad (ej. : borrar si tiene más de 24 horas)
+            // Por ahora retornamos siempre que exista
+            return registro.datos;
+        }
+    } catch (e) {
+        console.error('Error al leer de localStorage:', e);
+    }
+    return null;
+}
+
 // Inicialización común
 document.addEventListener('DOMContentLoaded', function() {
     inicializarBotonesCopiar();
