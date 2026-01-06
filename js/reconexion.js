@@ -45,6 +45,14 @@ function generarResumenReconexion() {
         tipoLlaveRadios.forEach(r => r.required = true);
     }
 
+    // Validación Item de Cobro
+    const itemCobroSelect = document.getElementById('selected-item-cobro');
+    if (itemCobroSelect && !itemCobroSelect.value) {
+        alert('Por favor, seleccione un Ítem de Cobro');
+        itemCobroSelect.focus();
+        return;
+    }
+
     if (!form.checkValidity()) {
         alert('Por favor, complete todos los campos requeridos');
         form.reportValidity();

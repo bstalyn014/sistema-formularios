@@ -101,6 +101,13 @@ function generarResumenReconexionDesdeCorte() {
     // Obtener item de cobro seleccionado en la SECCIÓN EXTRA
     const itemCobroInput = document.getElementById('selected-item-cobro-corte');
     const itemCobro = itemCobroInput ? itemCobroInput.value : '';
+
+    // Validación Item de Cobro
+    if (!itemCobro) {
+        alert('Por favor, seleccione un Ítem de Cobro para generar el resumen de reconexión.');
+        if (itemCobroInput) itemCobroInput.focus();
+        return;
+    }
     
     // MAPPING DE LÓGICA (Corte -> Reconexión)
     // Se realiza corte -> Reconexión

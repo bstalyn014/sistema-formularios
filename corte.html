@@ -217,8 +217,8 @@
                 <p>Si desea generar también el reporte de reconexión con estos datos, seleccione un ítem de cobro:</p>
                 
                 <div class="form-group">
-                    <label for="selected-item-cobro-corte">Item de cobro:</label>
-                    <select id="selected-item-cobro-corte" name="item_cobro">
+                    <label for="selected-item-cobro-corte" class="required">Item de cobro:</label>
+                    <select id="selected-item-cobro-corte" name="item_cobro" required>
                         <option value="">Seleccione un ítem de cobro</option>
                     </select>
                 </div>
@@ -233,7 +233,7 @@
                 <div class="resumen-content" id="resumen-contenido-reconexion-extra"></div>
                 
                 <div class="buttons" style="margin-top: 15px;">
-                    <button type="button" class="btn-guardar" onclick="guardarReconexionDesdeCorte()">💾 Guardar en Google Sheets</button>
+                    <button type="button" id="btn-guardar-reconexion-extra" class="btn-guardar" onclick="guardarReconexionDesdeCorte()">💾 Guardar en Google Sheets</button>
                 </div>
             </div>
             
