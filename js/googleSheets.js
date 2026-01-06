@@ -11,8 +11,34 @@ const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4VYdh-h4J-v
 // =============================================
 
 
-async function enviarAGSheets(tipo, datos) {
+// Variable global para controlar estado de envío
+let enProcesoDeEnvio = false;
+
+
+// =============================================
+// FUNCIÓN GENERAL PARA ENVIAR DATOS
+// =============================================
+
+
+async function enviarAGSheets(tipo, datos, btnId = null) {
+  // Evitar envíos duplicados si ya hay uno en proceso
+  if (enProcesoDeEnvio) {
+      console.log('⏳ Envío en proceso, ignorando clic adicional...');
+      return false;
+  }
+
+  const btn = btnId ? document.getElementById(btnId) : null;
+  const btnTextoOriginal = btn ? btn.innerHTML : '';
+
   try {
+    enProcesoDeEnvio = true;
+
+    // Deshabilitar botón visualmente
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '⏳ Enviando...';
+    }
+
     // Compatibilidad: Reconstruir campo 'cuadrilla' si existen supervisor y obrero
     if (datos.supervisor && datos.obrero) {
         datos.cuadrilla = `${datos.supervisor} / ${datos.obrero}`;
@@ -37,10 +63,31 @@ async function enviarAGSheets(tipo, datos) {
     // Mostrar mensaje de éxito
     mostrarMensajeEstado('✅ Datos guardados exitosamente en Google Sheets', 'success');
     
+    // ÉXITO: Mantener botón deshabilitado y cambiar texto
+    if (btn) {
+        btn.innerHTML = '✅ Enviado';
+        btn.classList.add('enviado'); // Agregar clase para estilo verde específico
+        // No reactivamos 'enProcesoDeEnvio' aquí para prevenir reenvíos del mismo formulario
+        // El usuario deberá recargar o limpiar (dependiendo del flujo) si quiere enviar otro
+        enProcesoDeEnvio = false; 
+        // IMPORTANTE: Aunque liberamos la bandera lógica, el botón sigue disabled
+        // para que visualmente no le den clic de nuevo al mismo dato.
+    } else {
+        enProcesoDeEnvio = false;
+    }
+    
     return true;
   } catch (error) {
     console.error('Error al enviar a Google Sheets:', error);
     mostrarMensajeEstado('❌ Error al guardar. Intenta nuevamente.', 'error');
+    
+    // ERROR: Reactivar todo para permitir reintento
+    enProcesoDeEnvio = false;
+    if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = btnTextoOriginal;
+        btn.classList.remove('enviado');
+    }
     return false;
   }
 }
@@ -59,7 +106,8 @@ async function guardarResidencialEnSheets() {
     datos[key] = value;
   });
   
-  return await enviarAGSheets('residencial', datos);
+  // Asumiendo que el botón tiene este ID (verificar residencial.html si es necesario)
+  return await enviarAGSheets('residencial', datos, 'btn-guardar-residencial');
 }
 
 // Función para Comercial
@@ -72,7 +120,7 @@ async function guardarComercialEnSheets() {
     datos[key] = value;
   });
   
-  return await enviarAGSheets('comercial', datos);
+  return await enviarAGSheets('comercial', datos, 'btn-guardar-comercial');
 }
 
 // Función para Reconexión
@@ -85,7 +133,7 @@ async function guardarReconexionEnSheets() {
     datos[key] = value;
   });
   
-  return await enviarAGSheets('reconexion', datos);
+  return await enviarAGSheets('reconexion', datos, 'btn-guardar-reconexion');
 }
 
 // =============================================
@@ -173,10 +221,16 @@ function agregarEstilosAnimacion() {
     }
     
     .btn-guardar:disabled {
-      background-color: #95a5a6;
+      background-color: #95a5a6; /* Gris para "Cargando..." */
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
+    }
+    
+    /* Estilo específico para cuando ya se envió (aunque esté disabled) */
+    .btn-guardar.enviado:disabled {
+      background-color: #27ae60 !important; /* Verde éxito */
+      opacity: 0.8; /* Leve transparencia para indicar inactivo pero visible */
     }
   `;
   

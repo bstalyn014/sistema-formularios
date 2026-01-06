@@ -200,5 +200,5 @@ async function guardarReconexionDesdeCorte() {
     datos['reconexion'] = reconexionValor;
     datos['item_cobro'] = itemCobro;
     
-    await enviarAGSheets('reconexion', datos);
+    await enviarAGSheets('reconexion', datos, 'btn-guardar-reconexion-extra');
 }
