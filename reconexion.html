@@ -51,23 +51,13 @@
 
                 <div class="form-section">
                     <h2>Estado del Servicio y Medidor</h2>
-                    <div class="form-group">
-                        <label class="required">Servicio</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="servicio" value="Activo" required> Activo</label>
-                            <label><input type="radio" name="servicio" value="Suspendido" required> Suspendido</label>
-                        </div>
-                    </div>
+                    <!-- Servicio eliminado -->
                     
                     <div class="form-group">
                         <label class="required">Medidor</label>
                         <div class="radio-group">
                             <label><input type="radio" name="medidor" value="Buen estado" required> Buen estado</label>
                             <label><input type="radio" name="medidor" value="Mal estado" required> Mal estado</label>
-                        </div>
-                        <div id="medidor-razon-reconexion" class="conditional-field">
-                            <label for="medidor-razon-text-reconexion">¿Por qué?</label>
-                            <input type="text" id="medidor-razon-text-reconexion" name="medidor_razon" placeholder="Explique el motivo del mal estado">
                         </div>
                     </div>
                     
@@ -108,10 +98,6 @@
                             <label><input type="radio" name="llave_corte" value="Mal estado" required> Mal estado</label>
                             <label><input type="radio" name="llave_corte" value="No tiene" required> No tiene</label>
                         </div>
-                        <div id="llave-corte-razon-reconexion" class="conditional-field">
-                            <label for="llave-corte-razon-text-reconexion">¿Por qué?</label>
-                            <input type="text" id="llave-corte-razon-text-reconexion" name="llave_corte_razon" placeholder="Explique el motivo del mal estado">
-                        </div>
                     </div>
 
                     <div class="form-group">
@@ -127,10 +113,6 @@
                         <div class="radio-group">
                             <label><input type="radio" name="llave_paso" value="Buen estado" required> Buen estado</label>
                             <label><input type="radio" name="llave_paso" value="Mal estado" required> Mal estado</label>
-                            <div id="llave-paso-razon-reconexion" class="conditional-field">
-                                <label for="llave-paso-razon-text-reconexion">¿Por qué?</label>
-                                <input type="text" id="llave-paso-razon-text-reconexion" name="llave_paso_razon" placeholder="Explique el motivo del mal estado">
-                            </div>
                             <label><input type="radio" name="llave_paso" value="No tiene" required> No tiene</label>
                         </div>
                     </div>
@@ -138,17 +120,7 @@
                 
                 <div class="form-section">
                     <h2>Detalles Finales de la Inspección</h2>
-                    <div class="form-group">
-                        <label class="required">Medio nudo</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="medio_nudo" value="Si" required> Si</label>
-                            <label><input type="radio" name="medio_nudo" value="No" required> No</label>
-                        </div>
-                        <div id="medio-nudo-accesorio-reconexion" class="conditional-field">
-                            <label for="medio-nudo-accesorio-text-reconexion">¿Qué tipo de accesorio tiene?</label>
-                            <input type="text" id="medio-nudo-accesorio-text-reconexion" name="medio_nudo_accesorio" placeholder="Especifique el tipo de accesorio">
-                        </div>
-                    </div>
+                    <!-- Medio nudo eliminado -->
 
                     <div class="form-group">
                         <label class="required">Se realiza la reconexión</label>
@@ -156,7 +128,7 @@
                             <label><input type="radio" name="reconexion" value="se retira ficha" required> Se retira ficha</label>
                             <label><input type="radio" name="reconexion" value="se destraba llave" required> Se destraba llave</label>
                             <label><input type="radio" name="reconexion" value="se retira ficha y se destraba llave" required> Se retira ficha y se destraba llave</label>
-                            <label><input type="radio" name="reconexion" value="ya estaba reconectado" required> Ya estaba reconectado</label>
+                            <label><input type="radio" name="reconexion" value="se encontró reconectado" required> Se encontró reconectado</label>
                         </div>
                     </div>
                     
@@ -167,7 +139,7 @@
                             <label><input type="radio" name="predio" value="2 planta" required> 2 planta</label>
                             <label><input type="radio" name="predio" value="3 planta" required> 3 planta</label>
                             <label><input type="radio" name="predio" value="4 planta" required> 4 planta</label>
-                            <label><input type="radio" name="predio" value="condominio" required> condominio</label>
+                            <label><input type="radio" name="predio" value="Departamento" required> Departamento</label>
                         </div>
                     </div>
                     
@@ -181,7 +153,7 @@
                         <div class="radio-group">
                             <label><input type="radio" name="perno" value="Se instala" required> Se instala</label>
                             <label><input type="radio" name="perno" value="Se ajusta" required> Se ajusta</label>
-                            <label><input type="radio" name="perno" value="No se coloca" required> No se coloca</label>
+                            <label><input type="radio" name="perno" value="No se instala" required> No se instala</label>
                         </div>
                         <div id="perno-razon-reconexion" class="conditional-field">
                             <label class="required">Seleccione la razón:</label>
@@ -189,6 +161,7 @@
                                 <label><input type="radio" name="perno_razon" value="no hay en stock"> No hay en stock</label>
                                 <label><input type="radio" name="perno_razon" value="tapa dañada"> Tapa dañada</label>
                                 <label><input type="radio" name="perno_razon" value="No se puede ajustar perno"> No se puede ajustar perno</label>
+                                <label><input type="radio" name="perno_razon" value="orificio en mal estado"> Orificio en mal estado</label>
                             </div>
                         </div>
                     </div>

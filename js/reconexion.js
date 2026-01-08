@@ -9,12 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function inicializarFormularioReconexion() {
     configurarListenersCondicionales('#formulario-reconexion', [
-        { name: 'medidor', id: 'medidor-razon-reconexion', condition: val => val === 'Mal estado' },
         { name: 'cajetin', id: 'cajetin-razon-reconexion', condition: val => val === 'Mal estado' },
-        { name: 'llave_corte', id: 'llave-corte-razon-reconexion', condition: val => val === 'Mal estado' },
-        { name: 'llave_paso', id: 'llave-paso-razon-reconexion', condition: val => val === 'Mal estado' },
-        { name: 'medio_nudo', id: 'medio-nudo-accesorio-reconexion', condition: val => val === 'No' },
-        { name: 'perno', id: 'perno-razon-reconexion', condition: val => val === 'No se coloca' }
+        { name: 'perno', id: 'perno-razon-reconexion', condition: val => val === 'No se instala' }
     ]);
 }
 
@@ -62,9 +58,15 @@ function generarResumenReconexion() {
     const formData = new FormData(form);
     const { supervisor, obrero } = obtenerDatosCuadrilla(formData);
 
-    let resumen = `Contrato: ${formData.get('contrato')}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se encontró el Servicio App ${formData.get('servicio')}, Medidor ${formData.get('medidor')}`;
-    
-    if (formData.get('medidor') === 'Mal estado') resumen += ` (${formData.get('medidor_razon')})`;
+    let resumen = `Contrato: ${formData.get('contrato')}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección `;
+
+    // Insertar frase de acción si NO es "se encontró reconectado"
+    const tipoReconexion = formData.get('reconexion');
+    if (tipoReconexion !== 'se encontró reconectado') {
+        resumen += `se procede a dejar el servicio de aapp habilitado, `;
+    }
+
+    resumen += `se encontró el Medidor ${formData.get('medidor')}`;
     
     resumen += `, Lectura ${formData.get('lectura')} M3, Litros ${formData.get('litros')}, Cajetin ${formData.get('cajetin')}`;
     if (formData.get('cajetin') === 'Mal estado') resumen += ` (${formData.get('cajetin_tipo_dano')})`;
@@ -75,24 +77,25 @@ function generarResumenReconexion() {
         resumen += `, Llave de corte No tiene`;
     } else {
         resumen += `, Tipo de llave de corte ${formData.get('tipo_llave')}, Llave de corte ${llaveCorteEstado}`;
-        if (llaveCorteEstado === 'Mal estado') resumen += ` (${formData.get('llave_corte_razon')})`;
     }
     
     resumen += `, Llave de paso ${formData.get('llave_paso')}`;
-    if (formData.get('llave_paso') === 'Mal estado') resumen += ` (${formData.get('llave_paso_razon')})`;
     
-    resumen += `, Medio nudo ${formData.get('medio_nudo')}`;
-    if (formData.get('medio_nudo') === 'No') resumen += ` (${formData.get('medio_nudo_accesorio')})`;
-    
-    const tipoReconexion = formData.get('reconexion');
-    if (tipoReconexion === 'ya estaba reconectado') {
+    // Reutilizamos la variable tipoReconexion ya obtenida arriba
+    if (tipoReconexion === 'se encontró reconectado') {
         resumen += `, se encontró el servicio reconectado`;
     } else {
-        resumen += `, se procede a realizar la reconexión del servicio ${tipoReconexion}`;
+        // Mapeo a gerundio
+        let accionTexto = tipoReconexion;
+        if (tipoReconexion === 'Se retira ficha') accionTexto = 'retirando ficha';
+        else if (tipoReconexion === 'Se retira ficha y se destraba llave') accionTexto = 'retirando ficha y destrabando llave';
+        else if (tipoReconexion === 'Se destraba llave') accionTexto = 'destrabando llave';
+        
+        resumen += `, se realiza la reconexión del servicio ${accionTexto}`;
     }
     
     resumen += `, Predio ${formData.get('predio')}, Color ${formData.get('color')}, Perno ${formData.get('perno')}`;
-    if (formData.get('perno') === 'No se coloca') resumen += ` (${formData.get('perno_razon')})`;
+    if (formData.get('perno') === 'No se instala') resumen += ` (${formData.get('perno_razon')})`;
     
     // Item de cobro eliminado del resumen por solicitud
     // const itemCobro = formData.get('item_cobro');
@@ -170,15 +173,11 @@ function setupCargaDatosLogica() {
         if (supervisorSelect) supervisorSelect.dispatchEvent(new Event('change'));
 
         // 2. Estado del Servicio y Medidor
-        setRadioValue(form, 'servicio', datos.servicio);
+        // setRadioValue(form, 'servicio', datos.servicio); // Servicio eliminado
         setRadioValue(form, 'medidor', datos.medidor);
-        if (datos.medidor === 'Mal estado') {
-            const razonInput = document.getElementById('medidor-razon-text-reconexion');
-            if (razonInput) razonInput.value = datos.medidor_razon || '';
-            document.getElementById('medidor-razon-reconexion').classList.add('active');
-        }
+        // Razones de medidor eliminadas
 
-        // 3. Lecturas (Se pueden editar después, pero se cargan las del corte)
+        // 3. Lecturas
         setInputValue('lectura-reconexion', datos.lectura);
         setInputValue('litros-reconexion', datos.litros);
 
@@ -190,11 +189,7 @@ function setupCargaDatosLogica() {
         }
 
         setRadioValue(form, 'llave_corte', datos.llave_corte);
-        if (datos.llave_corte === 'Mal estado') {
-            const razonLlave = document.getElementById('llave-corte-razon-text-reconexion');
-            if (razonLlave) razonLlave.value = datos.llave_corte_razon || '';
-            document.getElementById('llave-corte-razon-reconexion').classList.add('active');
-        }
+        // Razones llave corte eliminadas
         
         if (datos.llave_corte === 'No tiene') {
              // Disparar evento para deshabilitar tipo llave
@@ -205,25 +200,19 @@ function setupCargaDatosLogica() {
         }
 
         setRadioValue(form, 'llave_paso', datos.llave_paso);
-         if (datos.llave_paso === 'Mal estado') {
-            const razonPaso = document.getElementById('llave-paso-razon-text-reconexion');
-            if (razonPaso) razonPaso.value = datos.llave_paso_razon || '';
-            document.getElementById('llave-paso-razon-reconexion').classList.add('active');
-        }
+        // Razones llave paso eliminadas
 
         // 5. Detalles Finales
-        setRadioValue(form, 'medio_nudo', datos.medio_nudo);
-        if (datos.medio_nudo === 'No') {
-            const accesorioInput = document.getElementById('medio-nudo-accesorio-text-reconexion');
-            if (accesorioInput) accesorioInput.value = datos.medio_nudo_accesorio || '';
-             document.getElementById('medio-nudo-accesorio-reconexion').classList.add('active');
-        }
+        // Medio nudo eliminado
 
         setRadioValue(form, 'predio', datos.predio);
         setInputValue('color-reconexion', datos.color);
         
         setRadioValue(form, 'perno', datos.perno);
-        if (datos.perno === 'No se coloca') {
+        if (datos.perno === 'No se coloca' || datos.perno === 'No se instala') {
+            // Manejar compatibilidad si se cargan datos viejos "No se coloca"
+            const pernoVal = (datos.perno === 'No se coloca') ? 'No se instala' : datos.perno;
+             setRadioValue(form, 'perno', pernoVal);
             setRadioValue(form, 'perno_razon', datos.perno_razon);
             document.getElementById('perno-razon-reconexion').classList.add('active');
         }

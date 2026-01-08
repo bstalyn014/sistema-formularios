@@ -7,12 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function inicializarFormularioVerificacion() {
     configurarListenersCondicionales('#formulario-verificacion', [
-        { name: 'medidor', id: 'medidor-razon-verificacion', condition: val => val === 'Mal estado' },
         { name: 'cajetin', id: 'cajetin-razon-verificacion', condition: val => val === 'Mal estado' },
-        { name: 'llave_corte', id: 'llave-corte-razon-verificacion', condition: val => val === 'Mal estado' },
-        { name: 'llave_paso', id: 'llave-paso-razon-verificacion', condition: val => val === 'Mal estado' },
-        { name: 'medio_nudo', id: 'medio-nudo-accesorio-verificacion', condition: val => val === 'No' },
-        { name: 'perno', id: 'perno-razon-verificacion', condition: val => val === 'No se coloca' }
+        { name: 'perno', id: 'perno-razon-verificacion', condition: val => val === 'No se instala' }
     ]);
     
 // ... (resto de inicializarFormularioVerificacion y configurarListenersCondicionales se mantiene igual)
@@ -96,9 +92,14 @@ function generarResumenVerificacion() {
     const formData = new FormData(form);
     const { supervisor, obrero } = obtenerDatosCuadrilla(formData);
 
-    let resumen = `Contrato: ${formData.get('contrato')}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se encontró el Servicio App ${formData.get('servicio')}, Medidor ${formData.get('medidor')}`;
+    let resumen = `Contrato: ${formData.get('contrato')}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección `;
     
-    if (formData.get('medidor') === 'Mal estado') resumen += ` (${formData.get('medidor_razon')})`;
+    const tipoVerificacion = formData.get('verificacion');
+    if (tipoVerificacion !== 'se encontró reconectado') {
+        resumen += `se procede a dejar el servicio de aapp habilitado, `;
+    }
+
+    resumen += `se encontró el Medidor ${formData.get('medidor')}`;
     
     resumen += `, Lectura ${formData.get('lectura')} M3, Litros ${formData.get('litros')}, Cajetin ${formData.get('cajetin')}`;
     if (formData.get('cajetin') === 'Mal estado') resumen += ` (${formData.get('cajetin_tipo_dano')})`;
@@ -109,16 +110,11 @@ function generarResumenVerificacion() {
         resumen += `, Llave de corte No tiene`;
     } else {
         resumen += `, Tipo de llave de corte ${formData.get('tipo_llave')}, Llave de corte ${llaveCorteEstado}`;
-        if (llaveCorteEstado === 'Mal estado') resumen += ` (${formData.get('llave_corte_razon')})`;
     }
     
     resumen += `, Llave de paso ${formData.get('llave_paso')}`;
-    if (formData.get('llave_paso') === 'Mal estado') resumen += ` (${formData.get('llave_paso_razon')})`;
     
-    resumen += `, Medio nudo ${formData.get('medio_nudo')}`;
-    if (formData.get('medio_nudo') === 'No') resumen += ` (${formData.get('medio_nudo_accesorio')})`;
-    
-    const tipoVerificacion = formData.get('verificacion');
+    // tipoVerificacion ya declarado arriba
     let detalleVerificacion = '';
     
     if (tipoVerificacion === 'se encontró cortado') {
@@ -149,7 +145,7 @@ function generarResumenVerificacion() {
     resumen += `, se procedió a realizar la verificación del corte en donde ${detalleVerificacion}`;
     resumen += `, Predio ${formData.get('predio')}, Color ${formData.get('color')}, Perno ${formData.get('perno')}`;
     
-    if (formData.get('perno') === 'No se coloca') resumen += ` (${formData.get('perno_razon')})`;
+    if (formData.get('perno') === 'No se instala') resumen += ` (${formData.get('perno_razon')})`;
     
     const observacion = formData.get('observacion');
     if (observacion && observacion.trim() !== '') resumen += `, Observación: ${observacion}`;
