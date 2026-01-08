@@ -2,6 +2,14 @@
 // FUNCIONES DE UTILIDAD (COMPARTIDAS)
 // =============================================
 
+
+function toTitleCase(str) {
+    if (!str) return '';
+    return str.toLowerCase().split(' ').map(function(word) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
+}
+
 const PERSONAL = [
     "ARIAS SOLORZANO MICHAEL ANDRES",
     "BARREZUETA CARBO ALLAN PETER",
@@ -40,25 +48,29 @@ function cargarPersonal(supervisorId, obreroId) {
     obreroSelect.innerHTML = '<option value="">Seleccione un obrero</option>';
 
     PERSONAL.sort().forEach(nombre => {
+        const nombreDisplay = toTitleCase(nombre);
+        
         const optionS = document.createElement('option');
-        optionS.value = nombre;
-        optionS.textContent = nombre;
+        optionS.value = nombreDisplay;
+        optionS.textContent = nombreDisplay;
         supervisorSelect.appendChild(optionS);
 
         const optionO = document.createElement('option');
-        optionO.value = nombre;
-        optionO.textContent = nombre;
+        optionO.value = nombreDisplay;
+        optionO.textContent = nombreDisplay;
         obreroSelect.appendChild(optionO);
     });
 }
 
+
+
 function obtenerDatosCuadrilla(formData) {
     // Intenta obtener datos de campos individuales primero
-    const supervisor = formData.get('supervisor');
-    const obrero = formData.get('obrero');
+    let supervisor = formData.get('supervisor');
+    let obrero = formData.get('obrero');
 
     if (supervisor && obrero) {
-        return { supervisor, obrero };
+        return { supervisor: toTitleCase(supervisor), obrero: toTitleCase(obrero) };
     }
 
     // Fallback para soporte legacy o si falla algo
@@ -70,12 +82,12 @@ function obtenerDatosCuadrilla(formData) {
     const partes = cuadrillaCompleta.split(' / ');
     if (partes.length === 2) {
         return { 
-            supervisor: partes[0].trim(), 
-            obrero: partes[1].trim() 
+            supervisor: toTitleCase(partes[0].trim()), 
+            obrero: toTitleCase(partes[1].trim()) 
         };
     } else {
         return { 
-            supervisor: cuadrillaCompleta, 
+            supervisor: toTitleCase(cuadrillaCompleta), 
             obrero: "No especificado" 
         };
     }
