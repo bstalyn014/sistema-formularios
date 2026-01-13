@@ -58,15 +58,25 @@ function generarResumenReconexion() {
     const formData = new FormData(form);
     const { supervisor, obrero } = obtenerDatosCuadrilla(formData);
 
-    let resumen = `Contrato: ${formData.get('contrato')}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección `;
+    // INICIO DEL RESUMEN
+    let resumen = `Contrato: ${formData.get('contrato')}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado. `;
 
-    // Insertar frase de acción si NO es "se encontró reconectado"
+    // ACCIÓN REALIZADA
     const tipoReconexion = formData.get('reconexion');
-    if (tipoReconexion !== 'se encontró reconectado') {
-        resumen += `se procede a dejar el servicio de aapp habilitado, `;
+    if (tipoReconexion === 'se encontró reconectado') {
+        resumen += `Se encontró el servicio reconectado. `;
+    } else {
+        // Mapeo a gerundio
+        let accionTexto = tipoReconexion;
+        if (tipoReconexion === 'se retira ficha') accionTexto = 'retirando ficha';
+        else if (tipoReconexion === 'se retira ficha y se destraba llave') accionTexto = 'retirando ficha y destrabando llave';
+        else if (tipoReconexion === 'se destraba llave') accionTexto = 'destrabando llave';
+        
+        resumen += `Se realiza la reconexión del servicio ${accionTexto}. `;
     }
 
-    resumen += `se encontró el Medidor ${formData.get('medidor')}`;
+    // HALLAZGOS (ESTADO)
+    resumen += `Se encontró el Medidor en ${formData.get('medidor')}`;
     
     resumen += `, Lectura ${formData.get('lectura')} M3, Litros ${formData.get('litros')}, Cajetin ${formData.get('cajetin')}`;
     if (formData.get('cajetin') === 'Mal estado') resumen += ` (${formData.get('cajetin_tipo_dano')})`;
@@ -81,25 +91,8 @@ function generarResumenReconexion() {
     
     resumen += `, Llave de paso ${formData.get('llave_paso')}`;
     
-    // Reutilizamos la variable tipoReconexion ya obtenida arriba
-    if (tipoReconexion === 'se encontró reconectado') {
-        resumen += `, se encontró el servicio reconectado`;
-    } else {
-        // Mapeo a gerundio
-        let accionTexto = tipoReconexion;
-        if (tipoReconexion === 'Se retira ficha') accionTexto = 'retirando ficha';
-        else if (tipoReconexion === 'Se retira ficha y se destraba llave') accionTexto = 'retirando ficha y destrabando llave';
-        else if (tipoReconexion === 'Se destraba llave') accionTexto = 'destrabando llave';
-        
-        resumen += `, se realiza la reconexión del servicio ${accionTexto}`;
-    }
-    
     resumen += `, Predio ${formData.get('predio')}, Color ${formData.get('color')}, Perno ${formData.get('perno')}`;
     if (formData.get('perno') === 'No se instala') resumen += ` (${formData.get('perno_razon')})`;
-    
-    // Item de cobro eliminado del resumen por solicitud
-    // const itemCobro = formData.get('item_cobro');
-    // if (itemCobro && itemCobro.trim() !== '') resumen += `, Item de cobro: ${itemCobro}`;
     
     const observacion = formData.get('observacion');
     if (observacion && observacion.trim() !== '') resumen += `, Observación: ${observacion}`;

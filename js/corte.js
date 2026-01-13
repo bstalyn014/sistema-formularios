@@ -67,13 +67,13 @@ function generarResumenCorte() {
 
   let resumen = `Contrato: ${formData.get(
     "contrato"
-  )}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado, se encontró medidor ${formData.get(
-    "medidor"
-  )}`;
+  )}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado. Se realiza el corte del servicio ${formData.get(
+    "corte"
+  )}. Se encontró medidor en ${formData.get("medidor")}`;
 
   resumen += `, lectura ${formData.get("lectura")} M3, litros ${formData.get(
     "litros"
-  )}, cajetin ${formData.get("cajetin")}`;
+  )}, Cajetin ${formData.get("cajetin")}`;
   if (formData.get("cajetin") === "Mal estado")
     resumen += ` (${formData.get("cajetin_tipo_dano")})`;
 
@@ -84,20 +84,16 @@ function generarResumenCorte() {
   } else {
     resumen += `, Tipo de llave de corte ${formData.get(
       "tipo_llave"
-    )}, llave de corte ${llaveCorteEstado}`;
+    )}, Llave de corte ${llaveCorteEstado}`;
   }
 
-  resumen += ` llave de paso ${formData.get("llave_paso")}`;
+  resumen += `, Llave de paso ${formData.get("llave_paso")}`;
 
-  resumen += `, se procede a realizar corte del servicio ${formData.get(
-    "corte"
-  )}, predio ${formData.get("predio")}, color ${formData.get(
+  resumen += `, Predio ${formData.get("predio")}, Color ${formData.get(
     "color"
-  )}, perno ${formData.get("perno")}`;
+  )}, Perno ${formData.get("perno")}`;
   if (formData.get("perno") === "No se instala")
     resumen += ` (${formData.get("perno_razon")})`;
-
-
 
   if (formData.get("observacion"))
     resumen += `, Observación: ${formData.get("observacion")}`;
@@ -132,7 +128,6 @@ function generarResumenReconexionDesdeCorte() {
   }
 
   // MAPPING DE LÓGICA (Corte -> Reconexión)
-  // Se realiza corte -> Reconexión
   const corteValor = formData.get("corte");
   let reconexionValor = "";
 
@@ -143,7 +138,6 @@ function generarResumenReconexionDesdeCorte() {
   } else if (corteValor === "Solo llave trabada") {
     reconexionValor = "Se destraba llave";
   } else {
-    // Fallback o mismo valor
     reconexionValor = corteValor;
   }
 
@@ -160,7 +154,7 @@ function generarResumenReconexionDesdeCorte() {
   // CONSTRUIR RESUMEN DE RECONEXIÓN
   let resumen = `Contrato: ${formData.get(
     "contrato"
-  )}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado, se encontró Medidor ${formData.get(
+  )}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado. Se realiza la reconexión del servicio ${accionTexto}. Se encontró el Medidor en ${formData.get(
     "medidor"
   )}`;
 
@@ -182,23 +176,11 @@ function generarResumenReconexionDesdeCorte() {
 
   resumen += `, Llave de paso ${formData.get("llave_paso")}`;
 
-  // Usar el valor mapeado
-  resumen += `, se realiza la reconexión del servicio ${accionTexto}`;
-
   resumen += `, Predio ${formData.get("predio")}, Color ${formData.get(
     "color"
   )}, Perno ${formData.get("perno")}`;
   if (formData.get("perno") === "No se instala")
     resumen += ` (${formData.get("perno_razon")})`;
-
-
-
-  // Item de cobro (este sí se muestra aquí, no se especificó quitarlo de este resumen extra,
-  // pero si se quitó del principal... asumo que SIEMPRE se quita del resumen de texto final para reconexión según la solicitud previa
-  // "eliminemos del resumen de reconexionla parte del item de cobro".
-  // Así que lo mantendré comentado para ser consistente, aunque el usuario pidió seleccionarlo para GUARDARLO en Sheets).
-
-  // if (itemCobro && itemCobro.trim() !== '') resumen += `, Item de cobro: ${itemCobro}`;
 
   const observacion = formData.get("observacion");
   if (observacion && observacion.trim() !== "")

@@ -335,7 +335,7 @@ textarea:focus {
   gap: 15px;
 }
 
-.radio-group label {
+.radio-group > label {
   display: flex;
   align-items: center;
   background: #f8fafc;
@@ -347,7 +347,7 @@ textarea:focus {
   transition: all 0.2s;
 }
 
-.radio-group label:hover {
+.radio-group > label:hover {
   background: white;
   border-color: var(--tech-blue);
   transform: translateY(-1px);

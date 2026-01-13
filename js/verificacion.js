@@ -92,29 +92,10 @@ function generarResumenVerificacion() {
     const formData = new FormData(form);
     const { supervisor, obrero } = obtenerDatosCuadrilla(formData);
 
-    let resumen = `Contrato: ${formData.get('contrato')}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección `;
+    // INICIO RESUMEN
+    let resumen = `Contrato: ${formData.get('contrato')}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado. `;
     
     const tipoVerificacion = formData.get('verificacion');
-    if (tipoVerificacion !== 'se encontró reconectado') {
-        resumen += `se procede a dejar el servicio de aapp habilitado, `;
-    }
-
-    resumen += `se encontró el Medidor ${formData.get('medidor')}`;
-    
-    resumen += `, Lectura ${formData.get('lectura')} M3, Litros ${formData.get('litros')}, Cajetin ${formData.get('cajetin')}`;
-    if (formData.get('cajetin') === 'Mal estado') resumen += ` (${formData.get('cajetin_tipo_dano')})`;
-    
-    // Lógica para Tipo de Llave y Llave de Corte
-    const llaveCorteEstado = formData.get('llave_corte');
-    if (llaveCorteEstado === 'No tiene') {
-        resumen += `, Llave de corte No tiene`;
-    } else {
-        resumen += `, Tipo de llave de corte ${formData.get('tipo_llave')}, Llave de corte ${llaveCorteEstado}`;
-    }
-    
-    resumen += `, Llave de paso ${formData.get('llave_paso')}`;
-    
-    // tipoVerificacion ya declarado arriba
     let detalleVerificacion = '';
     
     if (tipoVerificacion === 'se encontró cortado') {
@@ -142,7 +123,25 @@ function generarResumenVerificacion() {
         detalleVerificacion += ')';
     }
     
-    resumen += `, se procedió a realizar la verificación del corte en donde ${detalleVerificacion}`;
+    // ACCIÓN (usando el formato solicitado "Se realiza...")
+    resumen += `Se realiza la verificación del servicio donde ${detalleVerificacion}. `;
+
+    // HALLAZGOS
+    resumen += `Se encontró el Medidor en ${formData.get('medidor')}`;
+    
+    resumen += `, Lectura ${formData.get('lectura')} M3, Litros ${formData.get('litros')}, Cajetin ${formData.get('cajetin')}`;
+    if (formData.get('cajetin') === 'Mal estado') resumen += ` (${formData.get('cajetin_tipo_dano')})`;
+    
+    // Lógica para Tipo de Llave y Llave de Corte
+    const llaveCorteEstado = formData.get('llave_corte');
+    if (llaveCorteEstado === 'No tiene') {
+        resumen += `, Llave de corte No tiene`;
+    } else {
+        resumen += `, Tipo de llave de corte ${formData.get('tipo_llave')}, Llave de corte ${llaveCorteEstado}`;
+    }
+    
+    resumen += `, Llave de paso ${formData.get('llave_paso')}`;
+    
     resumen += `, Predio ${formData.get('predio')}, Color ${formData.get('color')}, Perno ${formData.get('perno')}`;
     
     if (formData.get('perno') === 'No se instala') resumen += ` (${formData.get('perno_razon')})`;

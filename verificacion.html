@@ -43,6 +43,62 @@
 
                     <div id="verificacion-cuadrilla-display" class="cuadrilla-display"></div>
                     
+                    <div class="form-group">
+                        <label class="required">Se realiza la verificación de corte</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="verificacion" value="se encontró cortado" required> Se encontró cortado</label>
+                            
+                            <div id="cortado-opciones" class="conditional-field">
+                                <div class="form-group">
+                                    <label class="required">Seleccione el estado del predio:</label>
+                                    <div class="radio-group">
+                                        <label><input type="radio" name="cortado_opcion" value="Solar vacio"> Solar vacio</label>
+                                        <label><input type="radio" name="cortado_opcion" value="Predio deshabitado"> Predio deshabitado</label>
+                                        <label><input type="radio" name="cortado_opcion" value="Predio habitado, usuario ausente"> Predio habitado, usuario ausente</label>
+                                        <label><input type="radio" name="cortado_opcion" value="Predio habitado, usuario presente"> Predio habitado, usuario presente</label>
+                                    </div>
+                                </div>
+                                
+                                <div id="abastecimiento-field" class="conditional-field">
+                                    <div class="form-group">
+                                        <label for="abastecimiento-text">¿Cómo se abastece? (opcional)</label>
+                                        <input type="text" id="abastecimiento-text" name="abastecimiento" placeholder="Describa cómo se abastece el usuario">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <label><input type="radio" name="verificacion" value="se encontró reconectado" required> Se encontró reconectado</label>
+                            
+                            <div id="reconectado-opciones" class="conditional-field">
+                                <div class="form-group">
+                                    <label class="required">Seleccione el tipo de corte:</label>
+                                    <div class="radio-group">
+                                        <label><input type="radio" name="reconectado_opcion" value="Corte con dispositivo en llave"> Corte con dispositivo en llave</label>
+                                        <label><input type="radio" name="reconectado_opcion" value="Corte en guía con dispositivo"> Corte en guía con dispositivo</label>
+                                        <label>
+                                            <input type="radio" name="reconectado_opcion" value="Corte con rotura" id="corte-con-rotura"> Corte con rotura
+                                            <input type="text" id="rotura-medida" placeholder="ej: 40x40" style="margin-left: 10px; width: 100px; display: none;"> dispositivo en guía
+                                        </label>
+                                        <label><input type="radio" name="reconectado_opcion" value="Corte con ficha y llave trabada"> Corte con ficha y llave trabada</label>
+                                        <label><input type="radio" name="reconectado_opcion" value="Se deriva para carro"> Se deriva para carro</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <label><input type="radio" name="verificacion" value="se encontró posible fraude" required> Se encontró posible fraude</label>
+                            
+                            <div id="fraude-opciones" class="conditional-field">
+                                <div class="form-group">
+                                    <label class="required">Derivar inspección para carro</label>
+                                    <div class="form-group">
+                                        <label for="fraude-detalle" class="required">Especifique el posible fraude:</label>
+                                        <input type="text" id="fraude-detalle" name="fraude_detalle" placeholder="Describa el posible fraude">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
 
                 </div>
                 
@@ -119,61 +175,7 @@
                     <h2>Detalles Finales de la Inspección</h2>
                     <!-- Medio nudo eliminado -->
                     
-                    <div class="form-group">
-                        <label class="required">Se realiza la verificación de corte</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="verificacion" value="se encontró cortado" required> Se encontró cortado</label>
-                            
-                            <div id="cortado-opciones" class="conditional-field">
-                                <div class="form-group">
-                                    <label class="required">Seleccione el estado del predio:</label>
-                                    <div class="radio-group">
-                                        <label><input type="radio" name="cortado_opcion" value="Solar vacio"> Solar vacio</label>
-                                        <label><input type="radio" name="cortado_opcion" value="Predio deshabitado"> Predio deshabitado</label>
-                                        <label><input type="radio" name="cortado_opcion" value="Predio habitado, usuario ausente"> Predio habitado, usuario ausente</label>
-                                        <label><input type="radio" name="cortado_opcion" value="Predio habitado, usuario presente"> Predio habitado, usuario presente</label>
-                                    </div>
-                                </div>
-                                
-                                <div id="abastecimiento-field" class="conditional-field">
-                                    <div class="form-group">
-                                        <label for="abastecimiento-text">¿Cómo se abastece? (opcional)</label>
-                                        <input type="text" id="abastecimiento-text" name="abastecimiento" placeholder="Describa cómo se abastece el usuario">
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <label><input type="radio" name="verificacion" value="se encontró reconectado" required> Se encontró reconectado</label>
-                            
-                            <div id="reconectado-opciones" class="conditional-field">
-                                <div class="form-group">
-                                    <label class="required">Seleccione el tipo de corte:</label>
-                                    <div class="radio-group">
-                                        <label><input type="radio" name="reconectado_opcion" value="Corte con dispositivo en llave"> Corte con dispositivo en llave</label>
-                                        <label><input type="radio" name="reconectado_opcion" value="Corte en guía con dispositivo"> Corte en guía con dispositivo</label>
-                                        <label>
-                                            <input type="radio" name="reconectado_opcion" value="Corte con rotura" id="corte-con-rotura"> Corte con rotura
-                                            <input type="text" id="rotura-medida" placeholder="ej: 40x40" style="margin-left: 10px; width: 100px; display: none;"> dispositivo en guía
-                                        </label>
-                                        <label><input type="radio" name="reconectado_opcion" value="Corte con ficha y llave trabada"> Corte con ficha y llave trabada</label>
-                                        <label><input type="radio" name="reconectado_opcion" value="Se deriva para carro"> Se deriva para carro</label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <label><input type="radio" name="verificacion" value="se encontró posible fraude" required> Se encontró posible fraude</label>
-                            
-                            <div id="fraude-opciones" class="conditional-field">
-                                <div class="form-group">
-                                    <label class="required">Derivar inspección para carro</label>
-                                    <div class="form-group">
-                                        <label for="fraude-detalle" class="required">Especifique el posible fraude:</label>
-                                        <input type="text" id="fraude-detalle" name="fraude_detalle" placeholder="Describa el posible fraude">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     
                     <div class="form-group">
                         <label class="required">Predio</label>
