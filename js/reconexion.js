@@ -59,7 +59,7 @@ function generarResumenReconexion() {
     const { supervisor, obrero } = obtenerDatosCuadrilla(formData);
 
     // INICIO DEL RESUMEN
-    let resumen = `Contrato: ${formData.get('contrato')}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado. `;
+    let resumen = `Contrato: ${formData.get('contrato')}, Supervisor: ${supervisor} y Obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado. `;
 
     // ACCIÓN REALIZADA
     const tipoReconexion = formData.get('reconexion');
@@ -97,6 +97,12 @@ function generarResumenReconexion() {
     const observacion = formData.get('observacion');
     if (observacion && observacion.trim() !== '') resumen += `, Observación: ${observacion}`;
     
+    // GUARDAR DATOS LOCALMENTE (Para uso posterior en Mantenimiento)
+    const datosParaGuardar = {};
+    formData.forEach((value, key) => datosParaGuardar[key] = value);
+    // Usamos guardarCorteLocal de common.js que guarda por contrato
+    guardarCorteLocal(formData.get('contrato'), datosParaGuardar);
+
     mostrarResumen('reconexion', resumen);
 
     // Agregar botón de guardar si no existe

@@ -67,7 +67,7 @@ function generarResumenCorte() {
 
   let resumen = `Contrato: ${formData.get(
     "contrato"
-  )}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado. Se realiza el corte del servicio ${formData.get(
+  )}, Supervisor: ${supervisor} y Obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado. Se realiza el corte del servicio ${formData.get(
     "corte"
   )}. Se encontró medidor en ${formData.get("medidor")}`;
 
@@ -154,7 +154,7 @@ function generarResumenReconexionDesdeCorte() {
   // CONSTRUIR RESUMEN DE RECONEXIÓN
   let resumen = `Contrato: ${formData.get(
     "contrato"
-  )}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado. Se realiza la reconexión del servicio ${accionTexto}. Se encontró el Medidor en ${formData.get(
+  )}, Supervisor: ${supervisor} y Obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado. Se realiza la reconexión del servicio ${accionTexto}. Se encontró el Medidor en ${formData.get(
     "medidor"
   )}`;
 

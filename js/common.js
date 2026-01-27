@@ -307,7 +307,40 @@ function obtenerCorteLocal(contrato) {
     return null;
 }
 
+// =============================================
+// LIMPIEZA AUTOMÁTICA DE DATOS ANTIGUOS
+// =============================================
+function limpiarCortesAntiguos() {
+    try {
+        const cortesGuardados = JSON.parse(localStorage.getItem('cortesRecientes') || '{}');
+        const ahora = new Date().getTime();
+        const LIMITE_DIAS = 3;
+        const LIMITE_MS = LIMITE_DIAS * 24 * 60 * 60 * 1000;
+        
+        let cambios = false;
+        let contador = 0;
+
+        for (const contrato in cortesGuardados) {
+            const registro = cortesGuardados[contrato];
+            // Si no tiene timestamp (versiones viejas) o es más viejo que el límite
+            if (!registro.timestamp || (ahora - registro.timestamp > LIMITE_MS)) {
+                delete cortesGuardados[contrato];
+                cambios = true;
+                contador++;
+            }
+        }
+
+        if (cambios) {
+            localStorage.setItem('cortesRecientes', JSON.stringify(cortesGuardados));
+            console.log(`🧹 Limpieza automática: Se eliminaron ${contador} registros antiguos (> ${LIMITE_DIAS} días).`);
+        }
+    } catch (e) {
+        console.error('Error durante la limpieza automática:', e);
+    }
+}
+
 // Inicialización común
 document.addEventListener('DOMContentLoaded', function() {
     inicializarBotonesCopiar();
+    limpiarCortesAntiguos(); // Ejecutar limpieza al iniciar
 });

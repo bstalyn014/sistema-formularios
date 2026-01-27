@@ -93,7 +93,7 @@ function generarResumenVerificacion() {
     const { supervisor, obrero } = obtenerDatosCuadrilla(formData);
 
     // INICIO RESUMEN
-    let resumen = `Contrato: ${formData.get('contrato')}, la cuadrilla con supervisor: ${supervisor} y obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado. `;
+    let resumen = `Contrato: ${formData.get('contrato')}, Supervisor: ${supervisor} y Obrero: ${obrero}, al momento de la inspección se procede a dejar el servicio de aapp habilitado. `;
     
     const tipoVerificacion = formData.get('verificacion');
     let detalleVerificacion = '';
